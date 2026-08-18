@@ -1,0 +1,28 @@
+amends "package://github.com/jdx/hk/releases/download/v1.46.0/hk@1.46.0#/Config.pkl"
+
+local linters = new Mapping<String, Step> {
+    ["rubocop"] {
+        types = List("ruby")
+        check = "bin/rubocop --force-exclusion {{ files }}"
+        fix = "bin/rubocop --force-exclusion --autocorrect {{ files }}"
+    }
+    ["herb"] {
+        glob = "**/*.erb"
+        check = "bin/herb analyze app"
+    }
+}
+
+hooks {
+    ["pre-commit"] {
+        fix = true
+        stash = "git"
+        steps = linters
+    }
+    ["fix"] {
+        fix = true
+        steps = linters
+    }
+    ["check"] {
+        steps = linters
+    }
+}
