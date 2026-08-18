@@ -1,7 +1,7 @@
 require "rails_helper"
 require "capybara/rspec"
 
-Rails.root.glob("spec/system/support/**/*.rb").sort_by(&:to_s).each { |file| require file }
+Rails.root.glob("spec/system/support/**/*.rb").sort_by(&:to_s).each { require it }
 
 PHONE_VIEWPORT = [ 414, 896 ].freeze
 
