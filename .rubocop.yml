@@ -18,6 +18,14 @@ Handbook/EmptyActionMethod:
 AllCops:
   NewCops: enable
 
+# Omakase leaves line length alone. 120 is the hard limit; the editor rulers
+# in .editorconfig and .vscode/settings.json mark 80 as the comfortable one.
+Layout/LineLength:
+  Enabled: true
+  Max: 120
+  Exclude:
+    - db/*_schema.rb
+
 Handbook/ItBlockParameter:
   Description: "Prefer `it` over a named block parameter for one-line bodies."
   Enabled: true
