@@ -1,5 +1,7 @@
 <h1>Sign out?</h1>
 
+<p>You're signed in as <%= Current.user.email_address %>.</p>
+
 <%= button_to "Sign out", session_path, method: :delete %>
 
 <p><%= link_to "Stay signed in", root_path %></p>

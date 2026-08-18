@@ -45,6 +45,14 @@ RSpec.describe "Session route aliases" do
       expect(response).to redirect_to(new_session_path)
     end
 
+    it "names the account being signed out of" do
+      sign_in
+
+      get "/signout"
+
+      expect(response.body).to include(user.email_address)
+    end
+
     it "offers a button that deletes the session" do
       sign_in
 
