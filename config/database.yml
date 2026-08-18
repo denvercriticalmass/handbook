@@ -15,13 +15,17 @@ test:
   <<: *development
   database: handbook_test
 
+solid: &solid
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
 production:
-  primary: &primary_production
+  primary:
     <<: *default
     database: handbook_production
     username: handbook
     password: <%= ENV["HANDBOOK_DATABASE_PASSWORD"] %>
   queue:
-    <<: *primary_production
-    database: handbook_production_queue
+    <<: *solid
+    database: storage/production_queue.sqlite3
     migrations_paths: db/queue_migrate
