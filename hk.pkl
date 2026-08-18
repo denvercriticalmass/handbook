@@ -10,6 +10,11 @@ local linters = new Mapping<String, Step> {
         glob = "**/*.erb"
         check = "bin/herb analyze app"
     }
+    ["herb-format"] {
+        glob = "**/*.erb"
+        check = "npx herb-format --check {{ files }}"
+        fix = "npx herb-format {{ files }}"
+    }
 }
 
 hooks {

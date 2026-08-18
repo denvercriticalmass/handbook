@@ -1,0 +1,9 @@
+formatter:
+  enabled: true
+  maxLineLength: 120
+  rewriter:
+    pre:
+      # Sorts Tailwind classes into the canonical order, using the same
+      # algorithm as Tailwind's own Prettier plugin. It only reaches plain HTML
+      # class attributes -- class: options on Rails helpers are left alone.
+      - tailwind-class-sorter

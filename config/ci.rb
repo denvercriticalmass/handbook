@@ -5,6 +5,7 @@ CI.run do
 
   step "Style: Ruby", "bin/rubocop"
   step "Style: ERB", "bin/herb analyze app"
+  step "Format: ERB", "npx herb-format --check app"
 
   step "Security: Gem audit", "bin/bundler-audit"
   step "Security: Importmap vulnerability audit", "bin/importmap audit"
