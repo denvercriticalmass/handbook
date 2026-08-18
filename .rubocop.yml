@@ -5,5 +5,14 @@ plugins:
   - rubocop-rspec
   - rubocop-rspec_rails
 
+require:
+  - ./.rubocop/cops/empty_action_method.rb
+
+Handbook/EmptyActionMethod:
+  Description: "Empty controller actions carry no information."
+  Enabled: true
+  Include:
+    - app/controllers/**/*.rb
+
 AllCops:
   NewCops: enable
