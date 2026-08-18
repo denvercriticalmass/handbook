@@ -52,6 +52,10 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
+  # Omakase covers no RSpec cops
+  gem "rubocop-rspec", require: false
+  gem "rubocop-rspec_rails", require: false
+
   # Testing framework and factories [https://rspec.info/]
   gem "rspec-rails"
   gem "factory_bot_rails"
