@@ -56,6 +56,9 @@ group :development, :test do
   gem "rubocop-rspec", require: false
   gem "rubocop-rspec_rails", require: false
 
+  # HTML-aware ERB linting, which RuboCop doesn't reach [https://herb-tools.dev]
+  gem "herb", require: false
+
   # Testing framework and factories [https://rspec.info/]
   gem "rspec-rails"
   gem "factory_bot_rails"
