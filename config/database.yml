@@ -1,0 +1,31 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development: &development
+  <<: *default
+  database: handbook_development
+  host: <%= ENV.fetch("POSTGRES_HOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("POSTGRES_PORT", "5433") %>
+  username: <%= ENV.fetch("POSTGRES_USER", "handbook") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "handbook") %>
+
+test:
+  <<: *development
+  database: handbook_test
+
+solid: &solid
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+production:
+  primary:
+    <<: *default
+    database: handbook_production
+    username: handbook
+    password: <%= ENV["HANDBOOK_DATABASE_PASSWORD"] %>
+  queue:
+    <<: *solid
+    database: storage/production_queue.sqlite3
+    migrations_paths: db/queue_migrate
