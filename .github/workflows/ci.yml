@@ -54,7 +54,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -68,7 +68,7 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        run: bin/rails db:test:prepare && bin/rspec
+        run: bin/rails db:prepare && bin/rspec
 
   lint:
     runs-on: ubuntu-latest
