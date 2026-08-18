@@ -5,10 +5,9 @@
     color-scheme: light dark;
     --bg: #ffffff;
     --fg: #171717;
-    --muted: #525252;
-    --line: #a3a3a3;
+    --line: #787878;
     --field: #ffffff;
-    --danger: #b3261e;
+    --danger: #a01b14;
     --ok: #1b5e20;
   }
 
@@ -16,8 +15,6 @@
     :root {
       --bg: #171717;
       --fg: #e8e8e8;
-      --muted: #a3a3a3;
-      --line: #565656;
       --field: #262626;
       --danger: #f2b8b5;
       --ok: #9ccc9f;
