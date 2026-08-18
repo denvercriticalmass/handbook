@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <%= render "layouts/head" %>
+  </head>
+
+  <body>
+    <nav>
+      <%= link_to "Handbook", root_path %>
+
+      <% if authenticated? %>
+        <%= button_to "Sign out", session_path, method: :delete %>
+      <% end %>
+    </nav>
+
+    <main>
+      <%= yield %>
+    </main>
+  </body>
+</html>
