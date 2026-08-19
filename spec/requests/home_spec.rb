@@ -55,10 +55,9 @@ RSpec.describe "Home" do
     expect(response.body).not_to match(/signin|signout|session/i)
   end
 
-  it "looks the same to a signed-in admin, so the cache can't fragment" do
-    anonymous = body_of(root_path)
+  it "carries the admin nav for a signed-in admin" do
     sign_in
 
-    expect(body_of(root_path)).to eq(anonymous)
+    expect(body_of(root_path)).to include(admin_guides_path)
   end
 end

@@ -6,6 +6,8 @@
   </head>
 
   <body>
+    <%= render "layouts/nav" if authenticated? %>
+
     <main>
       <%= yield %>
     </main>
