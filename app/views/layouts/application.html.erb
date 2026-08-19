@@ -9,6 +9,8 @@
     <%= render "layouts/nav" if authenticated? %>
 
     <main>
+      <%= render "layouts/flash" %>
+
       <%= yield %>
     </main>
   </body>

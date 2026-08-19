@@ -1,5 +1,4 @@
 class RegistrationsController < ApplicationController
-  layout "admin"
   allow_unauthenticated_access
 
   def create

@@ -2,8 +2,6 @@
 # already destroys open sessions, so a suspended admin normally has no session
 # to resume.
 class Admin::BaseController < ApplicationController
-  layout "admin"
-
   before_action :require_active_account
   before_action :set_paper_trail_whodunnit
 

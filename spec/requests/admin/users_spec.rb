@@ -53,6 +53,16 @@ RSpec.describe "Admin users" do
   end
 
   describe "suspending" do
+    it "tells a refused admin why, on the page it sends them to" do
+      peer = create(:user)
+      sign_in_as admin
+
+      patch admin_user_path(peer), params: { active: false }
+      follow_redirect!
+
+      expect(Nokogiri::HTML(response.body).at("#alert").text).to eq("You can't do that.")
+    end
+
     it "is refused to an admin acting on a peer" do
       peer = create(:user)
       sign_in_as admin
