@@ -64,6 +64,12 @@
   /* A phone gets a bottom bar: primary navigation in thumb reach rather than
      the far corner. Apple caps a tab bar at five items on iPhone and asks for
      44pt targets; Material asks for three to five destinations. We have five. */
+  nav svg {
+    display: none;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
   @media (width < 40rem) {
     nav {
       position: fixed;
@@ -88,16 +94,26 @@
       flex: 1;
     }
 
+    nav svg {
+      display: block;
+    }
+
     nav > ul > li > a,
     nav > details > summary {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 3.25rem;
+      gap: 0.15rem;
+      min-height: 3.5rem;
       padding-inline: 0.25rem;
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       text-align: center;
       text-decoration: none;
+    }
+
+    nav > details > summary::after {
+      content: none;
     }
 
     nav > details > summary {
