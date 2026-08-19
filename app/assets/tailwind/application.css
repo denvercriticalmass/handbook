@@ -163,6 +163,10 @@
     margin: 0;
   }
 
+  td form + form {
+    margin-block-start: 0.35rem;
+  }
+
   td input[type="submit"],
   td button {
     min-height: 2.25rem;

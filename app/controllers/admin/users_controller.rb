@@ -1,8 +1,10 @@
 class Admin::UsersController < Admin::BaseController
   def index
     authorize User
+    authorize Invitation
 
-    @users = User.order(:email_address)
+    @users = User.order(:name)
+    @invitations = Invitation.outstanding
   end
 
   def update

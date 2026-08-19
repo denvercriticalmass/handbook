@@ -26,10 +26,47 @@
             <%= button_to user.active? ? "Suspend" : "Reinstate",
                   admin_user_path(user),
                   method: :patch,
-                  params: { active: !user.active? } %>
+                  params: { active: !user.active? },
+                  data: { turbo_confirm: suspension_warning(user) } %>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<h2>Invitations</h2>
+
+<% if @invitations.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @invitations.each do |invitation| %>
+        <tr>
+          <td><%= mail_to invitation.email_address %></td>
+
+          <td>
+            <%= invitation.expired? ? "Expired" : "Expires" %>
+            <%= invitation.expires_at.strftime("%-d %b") %>
+          </td>
+
+          <td>
+            <%= button_to "Resend", resend_admin_invitation_path(invitation) %>
+
+            <%= button_to "Revoke", admin_invitation_path(invitation), method: :delete,
+                  data: { turbo_confirm: "Revoke the invitation for #{invitation.email_address}? The link stops working." } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Nobody is waiting on an invitation.</p>
+<% end %>
