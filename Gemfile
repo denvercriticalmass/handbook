@@ -71,6 +71,9 @@ group :test do
   # System specs driven through Chrome's CDP rather than Selenium
   gem "capybara"
   gem "cuprite"
+
+  # Stubs ENV per example, for the SUPERADMIN_EMAIL bootstrap rule
+  gem "climate_control"
 end
 
 group :development do
