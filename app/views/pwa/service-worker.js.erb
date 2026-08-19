@@ -1,0 +1,14 @@
+const CACHE = "handbook-v1" const OFFLINE_PATH = "<%= offline_path %>" self.addEventListener("install", (event) => {
+event.waitUntil(caches.open(CACHE).then((cache) => cache.add(OFFLINE_PATH)).then(() => self.skipWaiting())) })
+self.addEventListener("activate", (event) => { event.waitUntil(caches.keys() .then((names) =>
+Promise.all(names.filter((name) => name !== CACHE).map((name) => caches.delete(name)))) .then(() =>
+self.clients.claim()) ) }) self.addEventListener("fetch", (event) => { const { request } = event if (request.method !==
+"GET") return if (request.mode === "navigate") { event.respondWith(page(request)) } else if (new
+URL(request.url).pathname.startsWith("/assets/")) { event.respondWith(asset(request)) } }) // Network first: a rider
+reading a corking rotation offline is the point, but a // rotation that changed last week is a safety problem, so the
+network wins // whenever there is one. async function page(request) { try { const response = await fetch(request) if
+(response.ok && response.headers.get("X-Offline-Cache") === "allowed") { const cache = await caches.open(CACHE)
+cache.put(request, response.clone()) } return response } catch (error) { return (await caches.match(request)) || (await
+caches.match(OFFLINE_PATH)) || Response.error() } } async function asset(request) { const cached = await
+caches.match(request) if (cached) return cached const response = await fetch(request) if (response.ok) { const cache =
+await caches.open(CACHE) cache.put(request, response.clone()) } return response }
