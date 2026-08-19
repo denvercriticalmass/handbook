@@ -1,4 +1,5 @@
 require "rails_helper"
+require "tempfile"
 
 RSpec.describe "Working offline" do
   it "serves a manifest" do
@@ -13,10 +14,12 @@ RSpec.describe "Working offline" do
     expect(response.body).to include(%(OFFLINE_PATH = "/offline"))
   end
 
-  it "serves a service worker that has not been reformatted as html" do
+  it "serves a service worker that parses as javascript" do
+    skip "node is not installed" unless system("which node > /dev/null 2>&1")
     get pwa_service_worker_path
+    script = Tempfile.new([ "service-worker", ".js" ]).tap { it.write(response.body); it.close }
 
-    expect(response.body.lines.first.strip).to eq(%(const CACHE = "handbook-v1"))
+    expect(system("node", "--check", script.path)).to be(true)
   end
 
   it "serves the fallback page" do
