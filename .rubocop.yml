@@ -8,6 +8,7 @@ plugins:
 require:
   - ./.rubocop/cops/empty_action_method.rb
   - ./.rubocop/cops/it_block_parameter.rb
+  - ./.rubocop/cops/prefer_data.rb
 
 Handbook/EmptyActionMethod:
   Description: "Empty controller actions carry no information."
@@ -40,10 +41,26 @@ Handbook/ItBlockParameter:
     - spec/spec_helper.rb
 
 # System specs are journeys; the short-example limits don't fit them.
+# System specs are journeys and cop specs are mostly heredocs; the
+# short-example limits don't fit either.
 RSpec/ExampleLength:
   Exclude:
     - spec/system/**/*.rb
+    - spec/rubocop/**/*.rb
 
 RSpec/MultipleExpectations:
   Exclude:
     - spec/system/**/*.rb
+    - spec/rubocop/**/*.rb
+
+Handbook/PreferData:
+  Description: "Prefer Data.define over Struct.new or a frozen record hash."
+  Enabled: true
+
+# Both need TargetRubyVersion >= 3.2, which .ruby-version supplies. Omakase
+# leaves them off.
+Style/DataInheritance:
+  Enabled: true
+
+Style/StructInheritance:
+  Enabled: true

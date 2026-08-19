@@ -5,9 +5,15 @@ Rails.root.glob("spec/system/support/**/*.rb").sort_by(&:to_s).each { require it
 
 PHONE_VIEWPORT = [ 414, 896 ].freeze
 
+# A cold CI runner needs longer than Ferrum's 10 second default to hand back a
+# websocket url. Passed as a dup because driven_by deletes from the hash.
+CUPRITE_OPTIONS = {
+  process_timeout: 30,
+  browser_options: ENV["CI"] ? { "no-sandbox" => nil, "disable-dev-shm-usage" => nil } : {}
+}.freeze
+
 RSpec.configure do |config|
   config.before(:each, type: :system) do
-    driven_by :cuprite
-    page.current_window.resize_to(*PHONE_VIEWPORT)
+    driven_by :cuprite, screen_size: PHONE_VIEWPORT, options: CUPRITE_OPTIONS.dup
   end
 end
