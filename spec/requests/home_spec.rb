@@ -9,8 +9,8 @@ RSpec.describe "Home" do
   end
 
   def sign_in
-    user = create(:user, password: password)
-    post session_path, params: { email_address: user.email_address, password: password }
+    user = create(:user, password:)
+    post session_path, params: { email_address: user.email_address, password: }
   end
 
   it "is reachable without signing in" do
