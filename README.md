@@ -1,24 +1,18 @@
-# README
+# Denver Critical Mass Handbook
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Guides, cheat sheets and known spots on the route. Anyone can read it without an
+account. The crew edits it from the admin screens.
 
-Things you may want to cover:
+## Running it
 
-* Ruby version
+    docker compose up -d
+    bin/setup
+    bin/dev
 
-* System dependencies
+`bin/ci` runs everything CI runs.
 
-* Configuration
+## Icons
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+[Heroicons](https://github.com/tailwindlabs/heroicons), MIT licensed, copyright
+Tailwind Labs. The five in `app/views/icons` are inlined so they take their
+colour from the page.
