@@ -1,6 +1,4 @@
-class HomeController < ApplicationController
-  allow_unauthenticated_access
-
+class HomeController < PublicController
   def show
     @ride = Ride.next
   end

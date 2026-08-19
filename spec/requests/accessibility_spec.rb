@@ -1,7 +1,5 @@
 require "rails_helper"
 
-# A sweep, not a substitute for judgement. It catches the invariants that are
-# cheap to break silently: a missing page language, a field with no label.
 pages = {
   "the homepage" => "/",
   "sign in" => "/signin",

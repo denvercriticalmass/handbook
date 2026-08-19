@@ -7,7 +7,13 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
+  helper_method :show_flash?
+
   private
+
+    def show_flash?
+      true
+    end
 
     def pundit_user
       Current.user

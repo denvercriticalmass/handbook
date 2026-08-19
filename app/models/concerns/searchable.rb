@@ -1,5 +1,3 @@
-# Shared by Guide and CheatSheet. The body is Action Text, so the indexed
-# column is the rich text record's, tags and all.
 module Searchable
   extend ActiveSupport::Concern
 

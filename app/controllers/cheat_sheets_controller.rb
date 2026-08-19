@@ -1,8 +1,4 @@
-# Public and unauthenticated, like the guides. Nothing here consults
-# Current.user, so the service worker can cache what it renders as-is.
-class CheatSheetsController < ApplicationController
-  allow_unauthenticated_access
-
+class CheatSheetsController < PublicController
   def index
     @cheat_sheets = CheatSheet.by_title
   end

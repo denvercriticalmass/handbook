@@ -1,8 +1,8 @@
 require "cop_helper"
 
 RSpec.describe RuboCop::Cop::Handbook::PreferData, :config do
-  # rubocop's parser defaults below the project's Ruby, and rejects an endless
-  # method whose body is an assignment.
+  # rubocop's parser defaults under the project's Ruby and rejects an endless
+  # method assigning a value.
   let(:ruby_version) { 3.4 }
 
   describe "Struct.new" do

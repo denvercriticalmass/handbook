@@ -1,8 +1,5 @@
 require "rails_helper"
 
-# These all hinge on User.count, so they deliberately share no factory setup
-# with the other auth specs. A stray create(:user) in a shared hook would make
-# them pass for the wrong reason.
 RSpec.describe "Registration" do
   let(:founder) { "joe@joesak.com" }
 
@@ -53,9 +50,7 @@ RSpec.describe "Registration" do
       expect(User.count).to eq(1)
     end
 
-    # Uses a different existing account on purpose. If the existing user held
-    # the founder address, uniqueness would reject this and the spec would
-    # pass without ever exercising the closed-registration rule.
+    # A founder-address user here would trip uniqueness, not the closed rule.
     it "is turned away even when the email matches SUPERADMIN_EMAIL" do
       create(:user, email_address: "someone@example.com")
 

@@ -30,8 +30,7 @@ RSpec.describe RuboCop::Cop::Handbook::ItBlockParameter, :config do
     RUBY
   end
 
-  # The outer block keeps its name because an inner `it` would shadow it. The
-  # inner block has nothing nested inside it, so it is fair game.
+  # An inner `it` would shadow the outer block's name.
   it "spares the outer block when one is nested, and still flags the inner" do
     expect_offense(<<~RUBY)
       names.map { |e| e.chars.map { |c| c.upcase } }

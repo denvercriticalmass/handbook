@@ -1,6 +1,8 @@
 class UserPolicy < ApplicationPolicy
+  # Any admin can read the roster and invite from it. Only the superadmin can
+  # act on anyone, which is #manage?.
   def index?
-    user&.superadmin?
+    user&.admin? || user&.superadmin?
   end
 
   def manage?
