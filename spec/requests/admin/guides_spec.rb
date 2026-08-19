@@ -44,6 +44,15 @@ RSpec.describe "Admin guides" do
     expect(Guide.sole.body.to_plain_text).to eq("Stand here.")
   end
 
+  it "links each guide to its history" do
+    guide = create(:guide)
+    sign_in_as admin
+
+    get admin_guides_path
+
+    expect(response.body).to include(history_admin_guide_path(guide))
+  end
+
   it "shows who changed what" do
     guide = create(:guide, title: "Korking")
     sign_in_as admin

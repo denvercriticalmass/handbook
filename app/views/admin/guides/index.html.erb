@@ -2,8 +2,26 @@
 
 <p><%= link_to "Write a guide", new_admin_guide_path %></p>
 
-<ul>
-  <% @guides.each do |guide| %>
-    <li><%= link_to guide.title, edit_admin_guide_path(guide) %></li>
-  <% end %>
-</ul>
+<% if @guides.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Updated</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @guides.each do |guide| %>
+        <tr>
+          <td><%= link_to guide.title, edit_admin_guide_path(guide) %></td>
+          <td><%= guide.updated_at.strftime("%-d %b %Y") %></td>
+          <td><%= link_to "History", history_admin_guide_path(guide) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No guides yet.</p>
+<% end %>
