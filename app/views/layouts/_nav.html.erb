@@ -1,7 +1,6 @@
-<nav>
-  <%= link_to "Handbook", root_path %>
-
-  <% if authenticated? %>
+<% if authenticated? %>
+  <nav>
+    <%= link_to "Handbook", root_path %>
     <%= link_to "Guides", admin_guides_path %>
     <%= link_to "Cheat sheets", admin_cheat_sheets_path %>
     <%= link_to "Admins", admin_users_path if policy(User).index? %>
@@ -14,5 +13,11 @@
         <li><%= button_to "Sign out", session_path, method: :delete %></li>
       </ul>
     </details>
-  <% end %>
-</nav>
+  </nav>
+<% elsif Rails.env.development? %>
+  <%# A public page has no way in on purpose. This is the way in while working. %>
+  <nav>
+    <%= link_to "Handbook", root_path %>
+    <%= link_to "Sign in", signin_path %>
+  </nav>
+<% end %>
