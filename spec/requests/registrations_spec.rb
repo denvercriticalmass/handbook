@@ -8,7 +8,7 @@ RSpec.describe "Registration" do
 
   def register(email_address, superadmin_email: nil)
     ClimateControl.modify(SUPERADMIN_EMAIL: superadmin_email) do
-      post signup_path, params: { email_address: email_address, password: "bike lanes now" }
+      post signup_path, params: { email_address:, password: "bike lanes now" }
     end
   end
 

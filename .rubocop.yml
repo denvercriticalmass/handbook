@@ -18,6 +18,11 @@ Handbook/EmptyActionMethod:
 AllCops:
   NewCops: enable
 
+# Omakase allows either. Prefer the shorthand when the key and the local share
+# a name.
+Style/HashSyntax:
+  EnforcedShorthandSyntax: always
+
 # Omakase leaves line length alone. 120 is the hard limit; the editor rulers
 # in .editorconfig and .vscode/settings.json mark 80 as the comfortable one.
 Layout/LineLength:

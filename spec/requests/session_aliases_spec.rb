@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Session route aliases" do
   let(:password) { "bike lanes now" }
-  let(:user) { create(:user, email_address: "corker@example.com", password: password) }
+  let(:user) { create(:user, email_address: "corker@example.com", password:) }
 
   def sign_in
-    post session_path, params: { email_address: user.email_address, password: password }
+    post session_path, params: { email_address: user.email_address, password: }
   end
 
   describe "signing in" do

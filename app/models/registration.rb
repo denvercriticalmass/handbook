@@ -9,7 +9,7 @@ class Registration
   end
 
   def create
-    User.create(email_address: email_address, password: password, role: :superadmin) if founding?
+    User.create(email_address:, password:, role: :superadmin) if founding?
   end
 
   private
