@@ -1,7 +1,3 @@
-<% if alert = flash[:alert] %>
-  <p id="alert" role="alert"><%= alert %></p>
-<% end %>
-
 <h1>Update your password</h1>
 
 <%= form_with url: password_path(params[:token]), method: :put do |form| %>

@@ -1,0 +1,8 @@
+<h1>Invite an admin</h1>
+
+<%= form_with url: admin_invitations_path do |form| %>
+  <%= form.label :email_address, "Email address" %>
+  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "off" %>
+
+  <%= form.submit "Send invitation" %>
+<% end %>

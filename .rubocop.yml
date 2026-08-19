@@ -38,3 +38,12 @@ Handbook/ItBlockParameter:
     # RSpec generated this file and names its parameters `expectations` and
     # `mocks`, which say more than `it` does.
     - spec/spec_helper.rb
+
+# System specs are journeys; the short-example limits don't fit them.
+RSpec/ExampleLength:
+  Exclude:
+    - spec/system/**/*.rb
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/system/**/*.rb
