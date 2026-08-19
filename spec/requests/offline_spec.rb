@@ -13,6 +13,12 @@ RSpec.describe "Working offline" do
     expect(response.body).to include(%(OFFLINE_PATH = "/offline"))
   end
 
+  it "serves a service worker that has not been reformatted as html" do
+    get pwa_service_worker_path
+
+    expect(response.body.lines.first.strip).to eq(%(const CACHE = "handbook-v1"))
+  end
+
   it "serves the fallback page" do
     get offline_path
 
