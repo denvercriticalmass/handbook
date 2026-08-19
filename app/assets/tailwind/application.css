@@ -69,6 +69,52 @@
     margin-block-start: 1rem;
   }
 
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-block-end: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  th,
+  td {
+    padding: 0.5rem 0.75rem 0.5rem 0;
+    text-align: start;
+    vertical-align: top;
+    border-block-end: 1px solid var(--line);
+    /* An email address has nowhere to wrap, so it would otherwise push the
+       controls column off the side of a phone. */
+    overflow-wrap: break-word;
+  }
+
+  th {
+    font-weight: 600;
+  }
+
+  /* Below this an email address is wider than its share of the table, so let
+     it break mid-word rather than scroll the page sideways. */
+  @media (width <= 26rem) {
+    td {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-inline-end: 0;
+  }
+
+  td form {
+    margin: 0;
+  }
+
+  td input[type="submit"],
+  td button {
+    min-height: 2.25rem;
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap;
+  }
+
   h1 {
     font-size: 1.625rem;
     font-weight: 600;
