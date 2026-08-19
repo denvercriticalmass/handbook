@@ -23,8 +23,10 @@ production:
   primary:
     <<: *default
     database: handbook_production
-    username: handbook
-    password: <%= ENV["HANDBOOK_DATABASE_PASSWORD"] %>
+    host: <%= ENV.fetch("POSTGRES_HOST", "handbook-db") %>
+    port: <%= ENV.fetch("POSTGRES_PORT", "5432") %>
+    username: <%= ENV.fetch("POSTGRES_USER", "handbook") %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
   queue:
     <<: *solid
     database: storage/production_queue.sqlite3
