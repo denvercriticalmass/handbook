@@ -11,7 +11,7 @@ class RegistrationsController < ApplicationController
 
     if user = registration.create
       start_new_session_for user
-      redirect_to root_path
+      redirect_to admin_root_path
     else
       redirect_to signin_path, alert: "That address can't register."
     end
