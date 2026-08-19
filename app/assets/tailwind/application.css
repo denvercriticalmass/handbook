@@ -114,6 +114,7 @@
   input[type="email"],
   input[type="password"],
   input[type="text"],
+  input[type="search"],
   textarea {
     display: block;
     width: 100%;
