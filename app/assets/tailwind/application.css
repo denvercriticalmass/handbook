@@ -30,13 +30,110 @@
 
   nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
     align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
     max-width: 65ch;
     margin-inline: auto;
     padding: 0.75rem 1rem;
     border-block-end: 1px solid var(--line);
+  }
+
+  /* One row that scrolls, never a second row with one orphan on it. The
+     links need 470px at a 414px viewport and no phone is wider than they are. */
+  nav > ul {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    overflow-x: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    scrollbar-width: none;
+  }
+
+  nav > ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  nav > ul > li {
+    flex: none;
+    white-space: nowrap;
+  }
+
+  /* A phone gets a bottom bar: primary navigation in thumb reach rather than
+     the far corner. Apple caps a tab bar at five items on iPhone and asks for
+     44pt targets; Material asks for three to five destinations. We have five. */
+  nav svg {
+    display: none;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  @media (width < 40rem) {
+    nav {
+      position: fixed;
+      inset: auto 0 0;
+      z-index: 20;
+      gap: 0;
+      max-width: none;
+      padding: 0 0 env(safe-area-inset-bottom);
+      border-block-start: 1px solid var(--line);
+      border-block-end: 0;
+      background-color: var(--bg);
+    }
+
+    nav > ul {
+      flex: 1;
+      overflow: visible;
+      gap: 0;
+    }
+
+    nav > ul > li,
+    nav > details {
+      flex: 1;
+    }
+
+    nav svg {
+      display: block;
+    }
+
+    nav > ul > li > a,
+    nav > details > summary {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.15rem;
+      min-height: 3.5rem;
+      padding-inline: 0.25rem;
+      font-size: 0.75rem;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    nav > details > summary::after {
+      content: none;
+    }
+
+    nav > details > summary {
+      border: 0;
+      border-radius: 0;
+    }
+
+    nav details ul {
+      inset-block-end: 100%;
+      inset-inline-end: 0.5rem;
+      margin-block: 0 0.35rem;
+    }
+
+    main {
+      padding-block-end: calc(5rem + env(safe-area-inset-bottom));
+    }
+  }
+
+  nav > details {
+    flex: none;
   }
 
   nav form {
