@@ -9,12 +9,29 @@ RSpec.describe "Admin users" do
   end
 
   describe "the admin list" do
-    it "is closed to an admin" do
+    it "is open to an admin" do
       sign_in_as admin
 
       get admin_users_path
 
-      expect(response).to redirect_to(root_path)
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "offers an admin the invite form" do
+      sign_in_as admin
+
+      get admin_users_path
+
+      expect(response.body).to include(new_admin_invitation_path)
+    end
+
+    it "hides the suspend control from an admin" do
+      create(:user, name: "Corker Joe")
+      sign_in_as admin
+
+      get admin_users_path
+
+      expect(response.body).not_to include("Suspend")
     end
 
     it "is open to the superadmin" do
