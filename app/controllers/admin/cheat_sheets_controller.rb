@@ -24,12 +24,12 @@ class Admin::CheatSheetsController < Admin::BaseController
   end
 
   def edit
-    @cheat_sheet = CheatSheet.find(params[:id])
+    @cheat_sheet = CheatSheet.friendly.find(params[:id])
     authorize @cheat_sheet
   end
 
   def update
-    @cheat_sheet = CheatSheet.find(params[:id])
+    @cheat_sheet = CheatSheet.friendly.find(params[:id])
     authorize @cheat_sheet
 
     if @cheat_sheet.update(cheat_sheet_params)
@@ -40,7 +40,7 @@ class Admin::CheatSheetsController < Admin::BaseController
   end
 
   def history
-    @cheat_sheet = CheatSheet.find(params[:id])
+    @cheat_sheet = CheatSheet.friendly.find(params[:id])
     authorize @cheat_sheet
 
     @history = History.new(@cheat_sheet)

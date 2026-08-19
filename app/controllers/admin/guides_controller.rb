@@ -24,12 +24,12 @@ class Admin::GuidesController < Admin::BaseController
   end
 
   def edit
-    @guide = Guide.find(params[:id])
+    @guide = Guide.friendly.find(params[:id])
     authorize @guide
   end
 
   def update
-    @guide = Guide.find(params[:id])
+    @guide = Guide.friendly.find(params[:id])
     authorize @guide
 
     if @guide.update(guide_params)
@@ -40,7 +40,7 @@ class Admin::GuidesController < Admin::BaseController
   end
 
   def history
-    @guide = Guide.find(params[:id])
+    @guide = Guide.friendly.find(params[:id])
     authorize @guide
 
     @history = History.new(@guide)

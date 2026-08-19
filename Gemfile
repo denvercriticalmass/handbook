@@ -36,6 +36,9 @@ gem "pg_search"
 # Versioning for edited content [https://github.com/paper-trail-gem/paper_trail]
 gem "paper_trail"
 
+# Slugs in place of ids in URLs [https://github.com/norman/friendly_id]
+gem "friendly_id"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
