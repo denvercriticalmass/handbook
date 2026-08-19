@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resource :session
   get "signin", to: "sessions#new", as: :signin
   get "signout", to: "sessions#signout", as: :signout
+  get "signup", to: "registrations#new", as: :signup
+  post "signup", to: "registrations#create"
   get "login", to: redirect("/signin")
   get "logout", to: redirect("/signout")
   resources :passwords, param: :token

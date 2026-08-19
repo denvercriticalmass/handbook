@@ -1,0 +1,11 @@
+<h1>Create the first account</h1>
+
+<%= form_with url: signup_path do |form| %>
+  <%= form.label :email_address, "Email address" %>
+  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username" %>
+
+  <%= form.label :password %>
+  <%= form.password_field :password, required: true, autocomplete: "new-password", maxlength: 72 %>
+
+  <%= form.submit "Create account" %>
+<% end %>
