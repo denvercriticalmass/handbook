@@ -24,3 +24,19 @@ Guide.find_or_create_by!(title: "Ride guidelines") do |guide|
 end
 
 puts "Seeded #{Guide.count} guide(s)."
+
+[
+  [ "Speer and 5th", :crossing, 39.7364, -104.9931, "Wait for the light, cork on green." ],
+  [ "Sunken Gardens", :regroup_point, 39.7301, -105.0007, "Where the ride gathers and ends." ],
+  [ "Broadway gutter", :hazard, 39.7280, -104.9877, "Deep seam by the curb, call it out." ]
+].each do |name, category, latitude, longitude, note|
+  Waypoint.find_or_create_by!(name:) do |waypoint|
+    waypoint.category = category
+    waypoint.latitude = latitude
+    waypoint.longitude = longitude
+    waypoint.note = note
+    waypoint.created_by = author
+  end
+end
+
+puts "Seeded #{Waypoint.count} waypoint(s)."

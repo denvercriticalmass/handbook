@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
   resources :guides, only: %i[ index show ]
   resources :cheat_sheets, only: %i[ index show ]
+  resources :waypoints, only: %i[ index show ]
   get "search", to: "search#index"
   get "tags/:name", to: "tags#show", as: :tag, constraints: { name: %r{[^/]+} }
   get "worldwide", to: "worldwide#show"

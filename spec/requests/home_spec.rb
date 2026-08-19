@@ -37,6 +37,12 @@ RSpec.describe "Home" do
     expect(response.body).to include(cheat_sheets_path)
   end
 
+  it "points at the waypoints" do
+    get root_path
+
+    expect(response.body).to include(waypoints_path)
+  end
+
   it "points at the worldwide rides" do
     get root_path
 

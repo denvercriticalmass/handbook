@@ -1,0 +1,13 @@
+<h1><%= @waypoint.name %></h1>
+
+<p><%= @waypoint.category.humanize %></p>
+
+<%= simple_format @waypoint.note %>
+
+<% if @waypoint.located? %>
+  <p><%= link_to "Open in a map", map_url(@waypoint) %></p>
+<% end %>
+
+<% if @waypoint.tag_list.any? %>
+  <p><%= safe_join(@waypoint.tag_list.map { link_to it, tag_path(it) }, " / ") %></p>
+<% end %>

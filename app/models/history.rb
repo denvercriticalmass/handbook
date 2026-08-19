@@ -20,7 +20,7 @@ class History
     attr_reader :record
 
     def versions
-      @versions ||= record.versions + (record.rich_text_body&.versions || [])
+      @versions ||= record.versioned_records.flat_map(&:versions)
     end
 
     # Seeds and console edits leave no whodunnit, so a name can be missing.

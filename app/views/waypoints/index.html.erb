@@ -1,0 +1,25 @@
+<h1>Waypoints</h1>
+
+<%= render "search" %>
+
+<p>
+  <%= link_to "All", waypoints_path %>
+
+  <% Waypoint.categories.each_key do |category| %>
+    / <%= link_to category.humanize, waypoints_path(category:) %>
+  <% end %>
+</p>
+
+<% if @waypoints.any? %>
+  <% @waypoints.group_by(&:category).each do |category, waypoints| %>
+    <h2><%= category.humanize %></h2>
+
+    <ul>
+      <% waypoints.each do |waypoint| %>
+        <li><%= link_to waypoint.name, waypoint_path(waypoint) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+<% else %>
+  <p>Nothing marked here yet.</p>
+<% end %>

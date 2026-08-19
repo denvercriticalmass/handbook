@@ -9,7 +9,8 @@ pages = {
   "the worldwide rides" => "/worldwide",
   "the cheat sheets" => "/cheat_sheets",
   "search" => "/search",
-  "a tag" => "/tags/corking"
+  "a tag" => "/tags/corking",
+  "the waypoints" => "/waypoints"
 }
 
 RSpec.describe "Accessibility" do
