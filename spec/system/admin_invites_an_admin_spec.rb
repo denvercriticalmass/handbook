@@ -23,6 +23,7 @@ RSpec.describe "Inviting an admin" do
   it "reaches the invite form from the admins page" do
     sign_in_as create(:user, :superadmin, password:)
 
+    find("summary", text: "Settings").click
     click_on "Admins"
     click_on "Invite an admin"
 
