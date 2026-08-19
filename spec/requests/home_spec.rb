@@ -13,6 +13,24 @@ RSpec.describe "Home" do
     post session_path, params: { email_address: user.email_address, password: }
   end
 
+  it "says when the next ride is" do
+    get root_path
+
+    expect(response.body).to include(Ride.next.on.strftime("%A, %B"))
+  end
+
+  it "says when to gather" do
+    get root_path
+
+    expect(response.body).to include(Ride.next.gathers_at)
+  end
+
+  it "points at the guides" do
+    get root_path
+
+    expect(response.body).to include(guides_path)
+  end
+
   it "is reachable without signing in" do
     get root_path
 
