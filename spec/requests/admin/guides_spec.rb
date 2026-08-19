@@ -44,6 +44,15 @@ RSpec.describe "Admin guides" do
     expect(Guide.sole.body.to_plain_text).to eq("Stand here.")
   end
 
+  it "records who made an edit" do
+    guide = create(:guide, title: "Korking")
+    sign_in_as admin
+
+    patch admin_guide_path(guide), params: { guide: { title: "Corking" } }
+
+    expect(guide.versions.last.whodunnit).to eq(admin.id)
+  end
+
   it "refuses one with no title" do
     sign_in_as admin
 

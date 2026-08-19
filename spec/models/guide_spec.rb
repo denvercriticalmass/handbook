@@ -26,6 +26,12 @@ RSpec.describe Guide do
     expect(described_class.search("drivers")).to eq([ guide ])
   end
 
+  it "keeps a version of every edit" do
+    guide = create(:guide, title: "Korking")
+
+    expect { guide.update!(title: "Corking") }.to change { guide.versions.count }.by(1)
+  end
+
   it "knows who wrote it" do
     expect(build(:guide).created_by).to be_a(User)
   end
