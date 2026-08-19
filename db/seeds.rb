@@ -5,7 +5,7 @@
 author = User.first || User.create!(
   name: "Joe",
   email_address: "joe@joesak.com",
-  password: "bike lanes now",
+  password: "cars ruin cities",
   role: :superadmin
 )
 
