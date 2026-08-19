@@ -29,6 +29,6 @@ class Admin::BaseController < ApplicationController
     end
 
     def refuse
-      redirect_to root_path, alert: "You can't do that."
+      redirect_to admin_root_path, alert: "You can't do that."
     end
 end
