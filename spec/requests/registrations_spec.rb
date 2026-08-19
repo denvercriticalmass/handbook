@@ -6,9 +6,9 @@ require "rails_helper"
 RSpec.describe "Registration" do
   let(:founder) { "joe@joesak.com" }
 
-  def register(email_address, superadmin_email: nil, token: nil)
+  def register(email_address, superadmin_email: nil, token: nil, name: "Joe")
     ClimateControl.modify(SUPERADMIN_EMAIL: superadmin_email) do
-      post signup_path, params: { email_address:, token:, password: "bike lanes now" }
+      post signup_path, params: { email_address:, token:, name:, password: "bike lanes now" }
     end
   end
 
@@ -17,6 +17,12 @@ RSpec.describe "Registration" do
       register(founder, superadmin_email: founder)
 
       expect(User.sole).to be_superadmin
+    end
+
+    it "keeps the name it registered under" do
+      register(founder, superadmin_email: founder, name: "Joe Sak")
+
+      expect(User.sole.name).to eq("Joe Sak")
     end
 
     it "matches the email regardless of case" do

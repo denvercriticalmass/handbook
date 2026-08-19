@@ -6,6 +6,7 @@ class RegistrationsController < ApplicationController
     registration = Registration.new(
       email_address: params[:email_address],
       password: params[:password],
+      name: params[:name],
       token: params[:token]
     )
 

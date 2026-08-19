@@ -3,8 +3,11 @@
 <%= form_with url: signup_path do |form| %>
   <%= form.hidden_field :token, value: params[:token] %>
 
+  <%= form.label :name %>
+  <%= form.text_field :name, required: true, autofocus: true, autocomplete: "name" %>
+
   <%= form.label :email_address, "Email address" %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username" %>
+  <%= form.email_field :email_address, required: true, autocomplete: "username" %>
 
   <%= form.label :password %>
   <%= form.password_field :password, required: true, autocomplete: "new-password", maxlength: 72 %>
