@@ -8,22 +8,4 @@
   <p>Nothing matched <%= @search.term %>.</p>
 <% end %>
 
-<% if @search.guides.any? %>
-  <h2>Guides</h2>
-
-  <ul>
-    <% @search.guides.each do |guide| %>
-      <li><%= link_to guide.title, guide_path(guide) %></li>
-    <% end %>
-  </ul>
-<% end %>
-
-<% if @search.cheat_sheets.any? %>
-  <h2>Cheat sheets</h2>
-
-  <ul>
-    <% @search.cheat_sheets.each do |cheat_sheet| %>
-      <li><%= link_to cheat_sheet.title, cheat_sheet_path(cheat_sheet) %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= render "results", guides: @search.guides, cheat_sheets: @search.cheat_sheets %>
