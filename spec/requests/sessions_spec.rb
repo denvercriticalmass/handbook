@@ -19,6 +19,20 @@ RSpec.describe "Sessions" do
       expect { sign_in }.to change { user.sessions.count }.by(1)
     end
 
+    it "turns away a suspended admin holding the right password" do
+      user.update!(active: false)
+
+      sign_in
+
+      expect(response).to redirect_to(new_session_path)
+    end
+
+    it "starts no session for a suspended admin" do
+      user.update!(active: false)
+
+      expect { sign_in }.not_to change { user.sessions.count }
+    end
+
     it "turns away the wrong password" do
       post session_path, params: { email_address: user.email_address, password: "wrong" }
 
