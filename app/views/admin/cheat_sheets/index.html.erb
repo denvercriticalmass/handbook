@@ -2,8 +2,26 @@
 
 <p><%= link_to "Write a cheat sheet", new_admin_cheat_sheet_path %></p>
 
-<ul>
-  <% @cheat_sheets.each do |cheat_sheet| %>
-    <li><%= link_to cheat_sheet.title, edit_admin_cheat_sheet_path(cheat_sheet) %></li>
-  <% end %>
-</ul>
+<% if @cheat_sheets.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Updated</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @cheat_sheets.each do |cheat_sheet| %>
+        <tr>
+          <td><%= link_to cheat_sheet.title, edit_admin_cheat_sheet_path(cheat_sheet) %></td>
+          <td><%= cheat_sheet.updated_at.strftime("%-d %b %Y") %></td>
+          <td><%= link_to "History", history_admin_cheat_sheet_path(cheat_sheet) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No cheat sheets yet.</p>
+<% end %>

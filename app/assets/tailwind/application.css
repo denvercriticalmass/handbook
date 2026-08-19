@@ -43,7 +43,8 @@
     margin: 0;
   }
 
-  nav input[type="submit"] {
+  nav input[type="submit"],
+  nav button {
     min-height: 2.25rem;
     padding: 0.25rem 0.75rem;
   }
@@ -66,6 +67,49 @@
   dt {
     font-weight: 600;
     margin-block-start: 1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-block-end: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  th,
+  td {
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    text-align: start;
+    vertical-align: top;
+    border-block-end: 1px solid var(--line);
+  }
+
+  /* An email address is one long token with nowhere to wrap, so it sets the
+     table's minimum width and pushes the controls off the side of a phone.
+     Breaking mid-token costs nothing on an address and leaves prose alone,
+     since a phrase already breaks at its spaces. */
+  td a {
+    overflow-wrap: anywhere;
+  }
+
+  th {
+    font-weight: 600;
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-inline-end: 0;
+  }
+
+  td form {
+    margin: 0;
+  }
+
+  td input[type="submit"],
+  td button {
+    min-height: 2.25rem;
+    padding: 0.25rem 0.6rem;
+    white-space: nowrap;
   }
 
   h1 {
@@ -128,7 +172,8 @@
     color: inherit;
   }
 
-  input[type="submit"] {
+  input[type="submit"],
+  button:not(.trix-button) {
     min-height: 2.75rem;
     padding: 0.5rem 1.25rem;
     border: 1px solid currentColor;

@@ -36,6 +36,15 @@ RSpec.describe "Admin cheat sheets" do
     expect(CheatSheet.sole.created_by).to eq(admin)
   end
 
+  it "links each cheat sheet to its history" do
+    cheat_sheet = create(:cheat_sheet)
+    sign_in_as admin
+
+    get admin_cheat_sheets_path
+
+    expect(response.body).to include(history_admin_cheat_sheet_path(cheat_sheet))
+  end
+
   it "shows who changed what" do
     cheat_sheet = create(:cheat_sheet, title: "Radioz")
     sign_in_as admin
