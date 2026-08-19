@@ -6,9 +6,9 @@ require "rails_helper"
 RSpec.describe "Registration" do
   let(:founder) { "joe@joesak.com" }
 
-  def register(email_address, superadmin_email: nil)
+  def register(email_address, superadmin_email: nil, token: nil)
     ClimateControl.modify(SUPERADMIN_EMAIL: superadmin_email) do
-      post signup_path, params: { email_address:, password: "bike lanes now" }
+      post signup_path, params: { email_address:, token:, password: "bike lanes now" }
     end
   end
 
@@ -56,6 +56,55 @@ RSpec.describe "Registration" do
       register(founder, superadmin_email: founder)
 
       expect(User.count).to eq(1)
+    end
+  end
+
+  describe "with an invitation" do
+    # Both are let!/before so the records exist before any expectation block
+    # measures User.count. Creating them inside the block counts the setup.
+    let!(:invitation) { create(:invitation, email_address: "corker@example.com") }
+
+    before { create(:user, email_address: "founder@example.com") }
+
+    def accept(email_address: invitation.email_address, token: invitation.token)
+      register(email_address, token:)
+    end
+
+    it "lets the invited address through" do
+      expect { accept }.to change(User, :count).by(1)
+    end
+
+    it "grants admin, never superadmin" do
+      accept
+
+      expect(User.find_by(email_address: invitation.email_address)).to be_admin
+    end
+
+    it "spends the invitation" do
+      accept
+
+      expect(invitation.reload).to be_accepted
+    end
+
+    it "refuses a second use of the same token" do
+      accept
+
+      expect { register(invitation.email_address, token: invitation.token) }
+        .not_to change(User, :count)
+    end
+
+    it "refuses an expired invitation" do
+      invitation.update!(expires_at: 1.day.ago)
+
+      expect { accept }.not_to change(User, :count)
+    end
+
+    it "refuses a token that belongs to a different address" do
+      expect { accept(email_address: "someone@else.example") }.not_to change(User, :count)
+    end
+
+    it "refuses a made-up token" do
+      expect { accept(token: "not-a-real-token") }.not_to change(User, :count)
     end
   end
 end

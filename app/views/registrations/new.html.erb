@@ -1,6 +1,8 @@
 <h1>Create the first account</h1>
 
 <%= form_with url: signup_path do |form| %>
+  <%= form.hidden_field :token, value: params[:token] %>
+
   <%= form.label :email_address, "Email address" %>
   <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username" %>
 
