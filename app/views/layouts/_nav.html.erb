@@ -21,16 +21,20 @@
           <span>Cheat sheets</span>
         <% end %>
       </li>
-
-      <% if policy(User).index? %>
-        <li>
-          <%= link_to admin_users_path do %>
-            <%= render "icons/admins" %>
-            <span>Admins</span>
-          <% end %>
-        </li>
-      <% end %>
     </ul>
+
+    <% if policy(User).index? %>
+      <details data-controller="menu">
+        <summary>
+          <%= render "icons/settings" %>
+          <span>Settings</span>
+        </summary>
+
+        <ul>
+          <li><%= link_to "Admins", admin_users_path %></li>
+        </ul>
+      </details>
+    <% end %>
 
     <details data-controller="menu">
       <summary>
