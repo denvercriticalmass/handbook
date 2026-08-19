@@ -1,0 +1,9 @@
+<h1>Tagged <%= @tagged.name %></h1>
+
+<%= render "search" %>
+
+<% unless @tagged.any? %>
+  <p>Nothing carries that tag.</p>
+<% end %>
+
+<%= render "results", guides: @tagged.guides, cheat_sheets: @tagged.cheat_sheets %>

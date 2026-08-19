@@ -49,6 +49,6 @@ class Admin::CheatSheetsController < Admin::BaseController
   private
 
     def cheat_sheet_params
-      params.expect(cheat_sheet: %i[ title body ])
+      params.expect(cheat_sheet: %i[ title body tag_list ])
     end
 end

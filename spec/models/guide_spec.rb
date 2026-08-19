@@ -42,6 +42,19 @@ RSpec.describe Guide do
     expect(described_class.friendly.find("corking-a-junction")).to eq(guide)
   end
 
+  it "takes a comma separated list of tags" do
+    guide = create(:guide, tag_list: "corking, junctions")
+
+    expect(guide.tag_list).to eq(%w[ corking junctions ])
+  end
+
+  it "is found by one of its tags" do
+    guide = create(:guide, tag_list: "corking")
+    create(:guide, tag_list: "radios")
+
+    expect(described_class.tagged_with("corking")).to eq([ guide ])
+  end
+
   it "keeps a version of every edit" do
     guide = create(:guide, title: "Korking")
 

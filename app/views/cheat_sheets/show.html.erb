@@ -1,3 +1,7 @@
 <h1><%= @cheat_sheet.title %></h1>
 
 <%= @cheat_sheet.body %>
+
+<% if @cheat_sheet.tag_list.any? %>
+  <p><%= safe_join(@cheat_sheet.tag_list.map { link_to it, tag_path(it) }, " / ") %></p>
+<% end %>

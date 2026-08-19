@@ -89,6 +89,14 @@ RSpec.describe "Admin guides" do
     expect(guide.versions.last.whodunnit).to eq(admin.id)
   end
 
+  it "takes tags from the form" do
+    sign_in_as admin
+
+    post admin_guides_path, params: { guide: { title: "Corking", tag_list: "corking, junctions" } }
+
+    expect(Guide.sole.tag_list).to eq(%w[ corking junctions ])
+  end
+
   it "refuses one with no title" do
     sign_in_as admin
 

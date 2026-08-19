@@ -5,5 +5,8 @@
   <%= form.label :body %>
   <%= form.rich_textarea :body %>
 
+  <%= form.label :tag_list, "Tags" %>
+  <%= form.text_field :tag_list, value: guide.tag_list.to_s %>
+
   <%= form.submit "Save" %>
 <% end %>

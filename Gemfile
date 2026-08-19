@@ -39,6 +39,9 @@ gem "paper_trail"
 # Slugs in place of ids in URLs [https://github.com/norman/friendly_id]
 gem "friendly_id"
 
+# Tagging for guides and cheat sheets [https://github.com/mbleigh/acts-as-taggable-on]
+gem "acts-as-taggable-on"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

@@ -67,6 +67,14 @@ RSpec.describe "Guides" do
     expect(response).to have_http_status(:ok)
   end
 
+  it "links its tags" do
+    guide = create(:guide, tag_list: "corking")
+
+    get guide_path(guide)
+
+    expect(response.body).to include(tag_path("corking"))
+  end
+
   it "keeps the author to itself" do
     guide = create(:guide, created_by: create(:user, email_address: "corker@example.com"))
 
