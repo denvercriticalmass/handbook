@@ -37,6 +37,12 @@ RSpec.describe Ride do
     end
   end
 
+  it "keeps its seasons out of the global namespace" do
+    described_class.next
+
+    expect(%i[WINTER SUMMER WINTER_MONTHS].select { Object.const_defined?(it, false) }).to be_empty
+  end
+
   it "counts April as winter and May as summer" do
     expect([ described_class.next(on: Date.new(2026, 4, 1)).winter?,
              described_class.next(on: Date.new(2026, 5, 1)).winter? ]).to eq([ true, false ])
