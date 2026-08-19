@@ -1,0 +1,109 @@
+const RELEASE = "<%= service_worker_release %>"
+const PAGES = "handbook-pages"
+const ASSETS = "handbook-assets"
+const OFFLINE = `handbook-offline-${RELEASE}`
+const OFFLINE_PATH = "<%= offline_path %>"
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(precache().catch(() => {}).then(() => self.skipWaiting()))
+})
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(sweep().then(() => self.clients.claim()))
+})
+
+self.addEventListener("message", (event) => {
+  if (event.data?.prefetch) event.waitUntil(prefetch(event.data.prefetch))
+  if (event.data?.forget) event.waitUntil(caches.delete(PAGES))
+})
+
+self.addEventListener("fetch", (event) => {
+  const { request } = event
+
+  if (request.method !== "GET" || request.headers.has("Range")) return
+
+  const url = new URL(request.url)
+  if (url.origin !== self.location.origin) return
+
+  if (isPage(request)) {
+    event.respondWith(networkFirst(event))
+  } else if (url.pathname.startsWith("/assets/")) {
+    event.respondWith(cacheFirst(event))
+  }
+})
+
+// Turbo fetches pages instead of navigating, so mode alone misses every link a rider taps.
+function isPage(request) {
+  if (request.mode === "navigate") return true
+  if (request.headers.get("Turbo-Frame")) return false
+
+  const accept = request.headers.get("Accept") || ""
+  if (accept.includes("text/vnd.turbo-stream.html")) return false
+
+  return accept.includes("text/html")
+}
+
+async function precache() {
+  const cache = await caches.open(OFFLINE)
+  const response = await fetch(OFFLINE_PATH, { cache: "reload" })
+
+  if (response.status === 200 && !response.redirected) await cache.put(OFFLINE_PATH, response)
+}
+
+async function sweep() {
+  const names = await caches.keys()
+  const stale = names.filter((name) => name.startsWith("handbook-offline-") && name !== OFFLINE)
+
+  await Promise.all(stale.map((name) => caches.delete(name)))
+}
+
+// A rotation that changed last week is a safety problem, so the network wins when there is one.
+async function networkFirst(event) {
+  const { request } = event
+
+  try {
+    const response = await fetch(request)
+    if (response.status === 200 && !response.redirected) event.waitUntil(rememberPage(request, response.clone()))
+    return response
+  } catch {
+    // Rails varies on Accept, and a turbo visit asks for different types than a reload does.
+    return await caches.match(request.url, { ignoreVary: true, cacheName: PAGES }) ||
+      await caches.match(OFFLINE_PATH, { cacheName: OFFLINE }) ||
+      Response.error()
+  }
+}
+
+async function cacheFirst(event) {
+  const { request } = event
+  const cached = await caches.match(request, { cacheName: ASSETS })
+  if (cached) return cached
+
+  const response = await fetch(request)
+  if (response.status === 200) event.waitUntil(rememberAsset(request, response.clone()))
+
+  return response
+}
+
+async function rememberPage(request, response) {
+  const cache = await caches.open(PAGES)
+
+  await cache.put(request.url, response)
+}
+
+async function prefetch(paths) {
+  const cache = await caches.open(PAGES)
+
+  await Promise.all(paths.map(async (path) => {
+    const url = new URL(path, self.location.origin)
+    if (url.origin !== self.location.origin || await cache.match(url.href)) return
+
+    const response = await fetch(url, { headers: { Accept: "text/html" } })
+    if (response.status === 200 && !response.redirected) await cache.put(url.href, response)
+  }))
+}
+
+async function rememberAsset(request, response) {
+  const cache = await caches.open(ASSETS)
+
+  await cache.put(request, response)
+}

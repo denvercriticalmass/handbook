@@ -1,0 +1,2 @@
+class OfflineController < PublicController
+end

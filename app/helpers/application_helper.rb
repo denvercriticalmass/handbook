@@ -1,7 +1,13 @@
 module ApplicationHelper
+  # Changes when the css is rebuilt, so a deploy reinstalls the worker.
+  def service_worker_release
+    Rails.application.assets.load_path.find("tailwind.css")&.digest || Rails.env
+  end
+
   def map_url(waypoint)
-    "https://www.openstreetmap.org/?mlat=#{waypoint.latitude}&mlon=#{waypoint.longitude}" \
-      "#map=18/#{waypoint.latitude}/#{waypoint.longitude}"
+    latitude, longitude = waypoint.latitude, waypoint.longitude
+
+    "https://www.openstreetmap.org/?mlat=#{latitude}&mlon=#{longitude}#map=18/#{latitude}/#{longitude}"
   end
 
   def suspension_warning(user)

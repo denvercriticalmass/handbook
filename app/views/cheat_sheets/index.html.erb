@@ -2,7 +2,7 @@
 
 <%= render "search" %>
 
-<ul>
+<ul data-controller="prefetch">
   <% @cheat_sheets.each do |cheat_sheet| %>
     <li><%= link_to cheat_sheet.title, cheat_sheet_path(cheat_sheet) %></li>
   <% end %>
