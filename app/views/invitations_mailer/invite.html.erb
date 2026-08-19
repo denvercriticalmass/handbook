@@ -1,0 +1,11 @@
+<p>
+  <%= @invitation.invited_by.name %> invited you to help run Denver Critical Mass.
+</p>
+
+<p>
+  <%= link_to "Set up your account", signup_url(token: @invitation.token) %>
+</p>
+
+<p>
+  The link works until <%= @invitation.expires_at.strftime("%A, %B %-d") %>, and only for this address.
+</p>
