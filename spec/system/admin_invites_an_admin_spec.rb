@@ -20,6 +20,16 @@ RSpec.describe "Inviting an admin" do
     expect(page).to have_content("Invited newcorker@example.com")
   end
 
+  it "moves between the admin screens from the nav" do
+    sign_in_as create(:user, :superadmin, email_address: "boss@example.com", password:)
+
+    click_on "Invite"
+    click_on "Admins"
+    click_on "Account"
+
+    expect(page).to have_field("Email address", with: "boss@example.com")
+  end
+
   it "offers Suspend against an admin but not against a superadmin" do
     sign_in_as create(:user, :superadmin, email_address: "boss@example.com", password:)
     create(:user, email_address: "corker@example.com")

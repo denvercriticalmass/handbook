@@ -10,6 +10,9 @@
       <%= link_to "Handbook", root_path %>
 
       <% if authenticated? %>
+        <%= link_to "Invite", new_admin_invitation_path %>
+        <%= link_to "Admins", admin_users_path if policy(User).index? %>
+        <%= link_to "Account", admin_account_path %>
         <%= button_to "Sign out", session_path, method: :delete %>
       <% end %>
     </nav>

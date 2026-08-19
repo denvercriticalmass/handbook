@@ -12,7 +12,7 @@ RSpec.describe "Sessions" do
     it "signs in a user with the right password" do
       sign_in
 
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(admin_root_path)
     end
 
     it "starts a session record for the user" do
