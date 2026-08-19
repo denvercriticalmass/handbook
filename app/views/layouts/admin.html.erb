@@ -15,6 +15,14 @@
     </nav>
 
     <main>
+      <% if alert = flash[:alert] %>
+        <p id="alert" role="alert"><%= alert %></p>
+      <% end %>
+
+      <% if notice = flash[:notice] %>
+        <p id="notice" role="status"><%= notice %></p>
+      <% end %>
+
       <%= yield %>
     </main>
   </body>
