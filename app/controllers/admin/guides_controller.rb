@@ -49,6 +49,6 @@ class Admin::GuidesController < Admin::BaseController
   private
 
     def guide_params
-      params.expect(guide: %i[ title body ])
+      params.expect(guide: %i[ title body tag_list ])
     end
 end

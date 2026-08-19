@@ -4,6 +4,8 @@ class Guide < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
 
+  acts_as_taggable_on :tags
+
   has_paper_trail on: %i[ create update destroy ]
 
   belongs_to :created_by, class_name: "User"

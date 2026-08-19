@@ -18,6 +18,10 @@ Handbook/EmptyActionMethod:
 
 AllCops:
   NewCops: enable
+  Exclude:
+    # Migrations copied in from an engine, so ours to run but not to restyle.
+    # Engine copies carry the engine name: create_versions.paper_trail.rb.
+    - db/migrate/*.*.rb
 
 # Omakase allows either. Prefer the shorthand when the key and the local share
 # a name.
