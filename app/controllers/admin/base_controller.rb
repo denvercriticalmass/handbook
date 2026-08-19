@@ -8,6 +8,11 @@ class Admin::BaseController < ApplicationController
 
   rescue_from Pundit::NotAuthorizedError, with: :refuse
 
+  # Turns "we remembered to call authorize" into something a spec can fail on.
+  # Without it, dropping an authorize call is invisible while every account
+  # happens to be an admin.
+  after_action :verify_authorized
+
   private
 
     def require_active_account

@@ -1,0 +1,7 @@
+<h1>Guides</h1>
+
+<ul>
+  <% @guides.each do |guide| %>
+    <li><%= link_to guide.title, guide_path(guide) %></li>
+  <% end %>
+</ul>

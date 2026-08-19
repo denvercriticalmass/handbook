@@ -1,6 +1,11 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
+  has_many :written_guides,
+    class_name: "Guide",
+    foreign_key: :created_by_id,
+    inverse_of: :created_by,
+    dependent: :nullify
   has_many :sent_invitations,
     class_name: "Invitation",
     foreign_key: :invited_by_id,
