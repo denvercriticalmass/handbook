@@ -14,4 +14,8 @@ class CheatSheet < ApplicationRecord
   validates :title, presence: true
 
   scope :by_title, -> { order(:title) }
+
+  def versioned_records
+    [ self, rich_text_body ].compact
+  end
 end
