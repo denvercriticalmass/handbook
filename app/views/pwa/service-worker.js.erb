@@ -1,53 +1,87 @@
-const CACHE = "handbook-v1"
+const RELEASE = "<%= service_worker_release %>"
+const PAGES = "handbook-pages"
+const ASSETS = `handbook-assets-${RELEASE}`
 const OFFLINE_PATH = "<%= offline_path %>"
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.add(OFFLINE_PATH)).then(() => self.skipWaiting()))
+  event.waitUntil(precache().catch(() => {}).then(() => self.skipWaiting()))
 })
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys()
-      .then((names) => Promise.all(names.filter((name) => name !== CACHE).map((name) => caches.delete(name))))
-      .then(() => self.clients.claim())
-  )
+  event.waitUntil(sweep().catch(() => {}).then(() => self.clients.claim()))
 })
 
 self.addEventListener("fetch", (event) => {
   const { request } = event
-  if (request.method !== "GET") return
+  if (request.method !== "GET" || request.headers.has("Range")) return
 
-  if (request.mode === "navigate") {
-    event.respondWith(page(request))
-  } else if (new URL(request.url).pathname.startsWith("/assets/")) {
-    event.respondWith(asset(request))
+  const url = new URL(request.url)
+  if (url.origin !== self.location.origin) return
+
+  if (isPage(request)) {
+    event.respondWith(page(event))
+  } else if (url.pathname.startsWith("/assets/")) {
+    event.respondWith(asset(event))
   }
 })
 
-// Network first: a rider reading a corking rotation offline is the point, but a
-// rotation that changed last week is a safety problem, so the network wins
-// whenever there is one.
-async function page(request) {
+// Turbo fetches a page rather than navigating to it, so mode alone would miss
+// every link a rider actually taps. Frames and streams are fragments and must
+// never be stored under a page's own url.
+function isPage(request) {
+  if (request.mode === "navigate") return true
+  if (request.headers.get("Turbo-Frame")) return false
+
+  const accept = request.headers.get("Accept") || ""
+  if (accept.includes("text/vnd.turbo-stream.html")) return false
+
+  return accept.includes("text/html")
+}
+
+async function precache() {
+  const cache = await caches.open(ASSETS)
+  const response = await fetch(OFFLINE_PATH, { cache: "reload" })
+  if (response.status === 200 && !response.redirected) await cache.put(OFFLINE_PATH, response)
+}
+
+async function sweep() {
+  const names = await caches.keys()
+  const stale = names.filter((name) => name.startsWith("handbook-assets-") && name !== ASSETS)
+  await Promise.all(stale.map((name) => caches.delete(name)))
+}
+
+// Network first. Reading a cheat sheet with no bars is the point, but a corking
+// rotation that changed last week is a safety problem.
+async function page(event) {
+  const key = new URL(event.request.url).href
+
   try {
-    const response = await fetch(request)
-    if (response.ok && response.headers.get("X-Offline-Cache") === "allowed") {
-      const cache = await caches.open(CACHE)
-      cache.put(request, response.clone())
+    const response = await fetch(event.request)
+    if (response.status === 200 && !response.redirected) {
+      const cache = await caches.open(PAGES)
+      const allowed = response.headers.get("X-Offline-Cache") === "allowed"
+      event.waitUntil((allowed ? cache.put(key, response.clone()) : cache.delete(key)).catch(() => {}))
     }
     return response
   } catch (error) {
-    return (await caches.match(request)) || (await caches.match(OFFLINE_PATH)) || Response.error()
+    return (await caches.match(key, { ignoreVary: true, cacheName: PAGES })) ||
+      (await caches.match(OFFLINE_PATH, { cacheName: ASSETS })) ||
+      Response.error()
   }
 }
 
-async function asset(request) {
-  const cached = await caches.match(request)
+async function asset(event) {
+  const cached = await caches.match(event.request, { cacheName: ASSETS })
   if (cached) return cached
 
-  const response = await fetch(request)
-  if (response.ok) {
-    const cache = await caches.open(CACHE)
-    cache.put(request, response.clone())
+  try {
+    const response = await fetch(event.request)
+    if (response.status === 200) {
+      const cache = await caches.open(ASSETS)
+      event.waitUntil(cache.put(event.request, response.clone()).catch(() => {}))
+    }
+    return response
+  } catch (error) {
+    return Response.error()
   }
-  return response
 }

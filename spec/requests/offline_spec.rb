@@ -22,6 +22,18 @@ RSpec.describe "Working offline" do
     expect(system("node", "--check", script.path)).to be(true)
   end
 
+  it "names the asset cache after the release, so a deploy sweeps the old one" do
+    get pwa_service_worker_path
+
+    expect(response.body).to match(/const RELEASE = "\w+"/)
+  end
+
+  it "treats a turbo visit as a page, since turbo fetches rather than navigates" do
+    get pwa_service_worker_path
+
+    expect(response.body).to include("Turbo-Frame")
+  end
+
   it "serves the fallback page" do
     get offline_path
 
