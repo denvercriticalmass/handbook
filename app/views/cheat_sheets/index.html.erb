@@ -1,5 +1,7 @@
 <h1>Cheat sheets</h1>
 
+<%= render "search" %>
+
 <ul>
   <% @cheat_sheets.each do |cheat_sheet| %>
     <li><%= link_to cheat_sheet.title, cheat_sheet_path(cheat_sheet) %></li>

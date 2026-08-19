@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   resources :guides, only: %i[ index show ]
   resources :cheat_sheets, only: %i[ index show ]
+  get "search", to: "search#index"
   get "worldwide", to: "worldwide#show"
 
   root "home#show"

@@ -9,6 +9,12 @@ RSpec.describe CheatSheet do
     expect(build(:cheat_sheet)).to be_valid
   end
 
+  it "is found by a word in its title" do
+    cheat_sheet = create(:cheat_sheet, title: "Radio channels")
+
+    expect(described_class.search("radio")).to eq([ cheat_sheet ])
+  end
+
   it "knows who wrote it" do
     expect(build(:cheat_sheet).created_by).to be_a(User)
   end

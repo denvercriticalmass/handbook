@@ -13,6 +13,19 @@ RSpec.describe Guide do
     expect(build(:guide, body: "<div>Stand <strong>here</strong></div>").body.to_plain_text).to eq("Stand here")
   end
 
+  it "is found by a word in its title" do
+    guide = create(:guide, title: "Corking a junction")
+    create(:guide, title: "Radio channels")
+
+    expect(described_class.search("corking")).to eq([ guide ])
+  end
+
+  it "is found by a word in its body" do
+    guide = create(:guide, body: "<div>Stand where drivers can see you</div>")
+
+    expect(described_class.search("drivers")).to eq([ guide ])
+  end
+
   it "knows who wrote it" do
     expect(build(:guide).created_by).to be_a(User)
   end
