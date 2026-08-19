@@ -35,6 +35,49 @@ RSpec.describe "Admin invitations" do
       .to have_enqueued_mail(InvitationsMailer, :invite)
   end
 
+  describe "revoking" do
+    it "clears the invitation away" do
+      invitation = create(:invitation)
+      sign_in_as admin
+
+      expect { delete admin_invitation_path(invitation) }.to change(Invitation, :count).by(-1)
+    end
+
+    it "is closed to a visitor" do
+      invitation = create(:invitation)
+
+      delete admin_invitation_path(invitation)
+
+      expect(response).to redirect_to(new_session_path)
+    end
+  end
+
+  describe "resending" do
+    it "makes an expired invitation usable again" do
+      invitation = create(:invitation, :expired)
+      sign_in_as admin
+
+      post resend_admin_invitation_path(invitation)
+
+      expect(invitation.reload).to be_usable
+    end
+
+    it "emails the invitation again" do
+      invitation = create(:invitation)
+      sign_in_as admin
+
+      expect { post resend_admin_invitation_path(invitation) }.to have_enqueued_mail(InvitationsMailer, :invite)
+    end
+
+    it "is closed to a visitor" do
+      invitation = create(:invitation)
+
+      post resend_admin_invitation_path(invitation)
+
+      expect(response).to redirect_to(new_session_path)
+    end
+  end
+
   it "records who did the inviting" do
     sign_in_as admin
 

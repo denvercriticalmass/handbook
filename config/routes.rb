@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :admin do
-    resources :invitations, only: %i[ new create ]
+    resources :invitations, only: %i[ new create destroy ] do
+      post :resend, on: :member
+    end
     resources :users, only: %i[ index update ]
     resources :guides, only: %i[ index new create edit update ] do
       get :history, on: :member
