@@ -8,7 +8,7 @@ plugins:
 require:
   - ./.rubocop/cops/empty_action_method.rb
   - ./.rubocop/cops/it_block_parameter.rb
-  - ./.rubocop/cops/data_over_struct.rb
+  - ./.rubocop/cops/prefer_data.rb
 
 Handbook/EmptyActionMethod:
   Description: "Empty controller actions carry no information."
@@ -53,8 +53,8 @@ RSpec/MultipleExpectations:
     - spec/system/**/*.rb
     - spec/rubocop/**/*.rb
 
-Handbook/DataOverStruct:
-  Description: "Prefer Data.define over Struct.new for values."
+Handbook/PreferData:
+  Description: "Prefer Data.define over Struct.new or a frozen record hash."
   Enabled: true
 
 # Both need TargetRubyVersion >= 3.2, which .ruby-version supplies. Omakase

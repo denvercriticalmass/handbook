@@ -1,6 +1,4 @@
-require "rubocop"
-require "rubocop/rspec/support"
-require_relative "../../../../.rubocop/cops/empty_action_method"
+require "cop_helper"
 
 RSpec.describe RuboCop::Cop::Handbook::EmptyActionMethod, :config do
   it "flags an empty action" do

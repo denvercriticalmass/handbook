@@ -1,6 +1,4 @@
-require "rubocop"
-require "rubocop/rspec/support"
-require_relative "../../../../.rubocop/cops/it_block_parameter"
+require "cop_helper"
 
 RSpec.describe RuboCop::Cop::Handbook::ItBlockParameter, :config do
   it "flags a named parameter on a one-line block" do
