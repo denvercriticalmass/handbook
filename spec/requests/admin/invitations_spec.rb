@@ -28,6 +28,13 @@ RSpec.describe "Admin invitations" do
       .to change(Invitation, :count).by(1)
   end
 
+  it "emails the person invited" do
+    sign_in_as admin
+
+    expect { post admin_invitations_path, params: { email_address: "new@example.com" } }
+      .to have_enqueued_mail(InvitationsMailer, :invite)
+  end
+
   it "records who did the inviting" do
     sign_in_as admin
 
