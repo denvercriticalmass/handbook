@@ -17,6 +17,14 @@ RSpec.describe "Guides" do
     expect(response.body).to include("Corking a junction")
   end
 
+  it "keeps the author to itself" do
+    guide = create(:guide, created_by: create(:user, email_address: "corker@example.com"))
+
+    get guide_path(guide)
+
+    expect(response.body).not_to include("corker@example.com")
+  end
+
   it "carries no trace of the admin UI" do
     create(:guide)
 
