@@ -9,7 +9,7 @@
     <%= render "layouts/nav" %>
 
     <main>
-      <%= render "layouts/flash" %>
+      <%= render "layouts/flash" if show_flash? %>
 
       <%= yield %>
     </main>

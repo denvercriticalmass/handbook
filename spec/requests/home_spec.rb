@@ -49,6 +49,14 @@ RSpec.describe "Home" do
     expect(response).to have_http_status(:ok)
   end
 
+  it "keeps a flash meant for somewhere else off a public page" do
+    post session_path, params: { email_address: "nobody@example.com", password: "wrong" }
+
+    get root_path
+
+    expect(Nokogiri::HTML(response.body).at("#alert")).to be_nil
+  end
+
   it "carries no trace of the admin UI" do
     get root_path
 

@@ -1,6 +1,4 @@
-class SearchController < ApplicationController
-  allow_unauthenticated_access
-
+class SearchController < PublicController
   def index
     @search = Search.new(params[:q])
   end
