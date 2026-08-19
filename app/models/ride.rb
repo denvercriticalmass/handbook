@@ -1,7 +1,7 @@
 Ride = Data.define(:on) do
   Season = Data.define(:weekday, :gathers_at, :rides_at)
 
-  WINTER = Season.new(weekday: :sunday, gathers_at: "1:30pm", rides_at: "2:00pm")
+  WINTER = Season.new(weekday: :sunday, gathers_at: "12:30pm", rides_at: "1:00pm")
   SUMMER = Season.new(weekday: :friday, gathers_at: "6:30pm", rides_at: "7:00pm")
   WINTER_MONTHS = [ 11, 12, 1, 2, 3, 4 ].freeze
 
