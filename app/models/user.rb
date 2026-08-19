@@ -8,6 +8,11 @@ class User < ApplicationRecord
     foreign_key: :created_by_id,
     inverse_of: :created_by,
     dependent: :restrict_with_error
+  has_many :written_cheat_sheets,
+    class_name: "CheatSheet",
+    foreign_key: :created_by_id,
+    inverse_of: :created_by,
+    dependent: :restrict_with_error
   has_many :sent_invitations,
     class_name: "Invitation",
     foreign_key: :invited_by_id,

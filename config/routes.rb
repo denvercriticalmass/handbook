@@ -17,12 +17,14 @@ Rails.application.routes.draw do
     resources :invitations, only: %i[ new create ]
     resources :users, only: %i[ index update ]
     resources :guides, only: %i[ index new create edit update ]
+    resources :cheat_sheets, only: %i[ index new create edit update ]
     resource :account, only: %i[ show update ]
 
     root "accounts#show"
   end
 
   resources :guides, only: %i[ index show ]
+  resources :cheat_sheets, only: %i[ index show ]
   get "worldwide", to: "worldwide#show"
 
   root "home#show"
