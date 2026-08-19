@@ -1,5 +1,3 @@
-# Asymmetric on purpose: the public side has no login, so reading is open to
-# everyone and writing needs an account.
 class CheatSheetPolicy < ApplicationPolicy
   def index?
     true

@@ -1,15 +1,10 @@
-# Authentication is inherited. The active check is belt and braces: suspension
-# already destroys open sessions, so a suspended admin normally has no session
-# to resume. It only bites when a row was changed without the callback running.
 class Admin::BaseController < ApplicationController
   before_action :require_active_account
   before_action :set_paper_trail_whodunnit
 
   rescue_from Pundit::NotAuthorizedError, with: :refuse
 
-  # Turns "we remembered to call authorize" into something a spec can fail on.
-  # Without it, dropping an authorize call is invisible while every account
-  # happens to be an admin.
+  # Makes a missing authorize call fail a spec while every account is an admin.
   after_action :verify_authorized
 
   private
@@ -19,8 +14,7 @@ class Admin::BaseController < ApplicationController
       Current.user&.id
     end
 
-    # terminate_session doesn't halt the request, so without this redirect the
-    # action still runs and a suspended admin gets one more write in.
+    # Without the redirect the action runs on and the suspension misses a write.
     def require_active_account
       return if Current.user&.active?
 

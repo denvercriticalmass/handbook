@@ -1,7 +1,3 @@
-# Both registration paths call this, password and OmniAuth.
-#
-# Not a validation on User: specs and seeds create users directly, and a
-# validation would reject them.
 class Registration
   def initialize(email_address:, password:, name:, token: nil)
     @email_address = email_address.to_s.strip.downcase

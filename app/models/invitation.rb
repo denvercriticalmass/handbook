@@ -1,4 +1,3 @@
-# The token is a single-use credential. Never log it.
 class Invitation < ApplicationRecord
   LIFESPAN = 1.week
 

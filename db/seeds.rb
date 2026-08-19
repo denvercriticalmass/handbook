@@ -1,7 +1,3 @@
-# Dev convenience only. Real content is written through the admin UI.
-#
-# The ride guidelines are a Guide record rather than homepage markup, so they
-# stay editable and searchable like everything else.
 author = User.first || User.create!(
   name: "Joe",
   email_address: "joe@joesak.com",

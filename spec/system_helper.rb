@@ -5,8 +5,8 @@ Rails.root.glob("spec/system/support/**/*.rb").sort_by(&:to_s).each { require it
 
 PHONE_VIEWPORT = [ 414, 896 ].freeze
 
-# A cold CI runner needs longer than Ferrum's 10 second default to hand back a
-# websocket url. Passed as a dup because driven_by deletes from the hash.
+# A cold CI runner outlasts Ferrum's 10 second default. Dup because driven_by
+# deletes from the hash.
 CUPRITE_OPTIONS = {
   process_timeout: 30,
   browser_options: ENV["CI"] ? { "no-sandbox" => nil, "disable-dev-shm-usage" => nil } : {}
