@@ -3,7 +3,7 @@
 <ul>
   <% @users.each do |user| %>
     <li>
-      <%= user.email_address %> (<%= user.role %><%= ", suspended" unless user.active? %>)
+      <%= user.name %>, <%= user.email_address %> (<%= user.role %><%= ", suspended" unless user.active? %>)
 
       <% if policy(user).manage? %>
         <%= button_to user.active? ? "Suspend" : "Reinstate",
