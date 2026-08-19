@@ -31,6 +31,12 @@ RSpec.describe "Home" do
     expect(response.body).to include(guides_path)
   end
 
+  it "points at the worldwide rides" do
+    get root_path
+
+    expect(response.body).to include(worldwide_path)
+  end
+
   it "is reachable without signing in" do
     get root_path
 

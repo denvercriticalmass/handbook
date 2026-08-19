@@ -1,0 +1,19 @@
+<h1>You're riding with friends all over the world.</h1>
+
+<p>
+  Critical Mass happens on every continent. Each city makes it its own, but the idea's the same. Ride together, demand
+  safer streets.
+</p>
+
+<%= tag.div aria: { hidden: true }, data: { controller: "world-cloud", world_cloud_cities_value: @cloud } %>
+
+<h2>A few public ride pages</h2>
+
+<dl>
+  <% @continents.each do |continent| %>
+    <dt><%= continent.name %></dt>
+    <dd><%= safe_join(continent.linked_cities.map { link_to it.name, it.url }, " / ") %></dd>
+  <% end %>
+</dl>
+
+<p>Rides everywhere else: <%= link_to "events.bike", "https://events.bike" %></p>

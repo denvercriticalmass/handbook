@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   end
 
   resources :guides, only: %i[ index show ]
+  get "worldwide", to: "worldwide#show"
 
   root "home#show"
 
