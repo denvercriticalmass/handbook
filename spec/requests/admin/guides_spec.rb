@@ -70,6 +70,16 @@ RSpec.describe "Admin guides" do
     expect(response).to redirect_to(new_session_path)
   end
 
+  it "stops a suspended admin who is still holding a session" do
+    guide = create(:guide, title: "Korking")
+    sign_in_as admin
+    admin.update_column(:active, false)
+
+    patch admin_guide_path(guide), params: { guide: { title: "Corking" } }
+
+    expect(guide.reload.title).to eq("Korking")
+  end
+
   it "records who made an edit" do
     guide = create(:guide, title: "Korking")
     sign_in_as admin

@@ -1,6 +1,6 @@
 # Authentication is inherited. The active check is belt and braces: suspension
 # already destroys open sessions, so a suspended admin normally has no session
-# to resume.
+# to resume. It only bites when a row was changed without the callback running.
 class Admin::BaseController < ApplicationController
   before_action :require_active_account
   before_action :set_paper_trail_whodunnit
@@ -19,8 +19,13 @@ class Admin::BaseController < ApplicationController
       Current.user&.id
     end
 
+    # terminate_session doesn't halt the request, so without this redirect the
+    # action still runs and a suspended admin gets one more write in.
     def require_active_account
-      terminate_session unless Current.user&.active?
+      return if Current.user&.active?
+
+      terminate_session
+      redirect_to new_session_path, alert: "That account is suspended."
     end
 
     def refuse
