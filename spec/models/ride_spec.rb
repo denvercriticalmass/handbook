@@ -33,9 +33,17 @@ RSpec.describe Ride do
     end
   end
 
-  it "counts March as winter and April as summer" do
-    expect([ described_class.next(on: Date.new(2026, 3, 1)).winter?,
-             described_class.next(on: Date.new(2026, 4, 1)).winter? ]).to eq([ true, false ])
+  it "counts April as winter and May as summer" do
+    expect([ described_class.next(on: Date.new(2026, 4, 1)).winter?,
+             described_class.next(on: Date.new(2026, 5, 1)).winter? ]).to eq([ true, false ])
+  end
+
+  it "puts April's ride on the last Sunday now that winter reaches it" do
+    expect(described_class.next(on: Date.new(2026, 4, 1)).on).to eq(Date.new(2026, 4, 26))
+  end
+
+  it "goes back to Friday evenings in May" do
+    expect(described_class.next(on: Date.new(2026, 5, 1)).on).to eq(Date.new(2026, 5, 29))
   end
 
   it "still points at today's ride on the day itself" do
