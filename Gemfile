@@ -30,6 +30,9 @@ gem "bcrypt", "~> 3.1.7"
 # Per-resource authorization policies [https://github.com/varvet/pundit]
 gem "pundit"
 
+# Postgres full-text search [https://github.com/Casecommons/pg_search]
+gem "pg_search"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
