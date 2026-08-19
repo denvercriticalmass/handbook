@@ -1,5 +1,7 @@
 <h1>Guides</h1>
 
+<%= render "search" %>
+
 <ul>
   <% @guides.each do |guide| %>
     <li><%= link_to guide.title, guide_path(guide) %></li>
