@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    email_address { "user@example.com" }
+    sequence(:email_address) { "user#{it}@example.com" }
     password { "password" }
 
     trait :superadmin do
