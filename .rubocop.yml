@@ -41,13 +41,17 @@ Handbook/ItBlockParameter:
     - spec/spec_helper.rb
 
 # System specs are journeys; the short-example limits don't fit them.
+# System specs are journeys and cop specs are mostly heredocs; the
+# short-example limits don't fit either.
 RSpec/ExampleLength:
   Exclude:
     - spec/system/**/*.rb
+    - spec/rubocop/**/*.rb
 
 RSpec/MultipleExpectations:
   Exclude:
     - spec/system/**/*.rb
+    - spec/rubocop/**/*.rb
 
 Handbook/DataOverStruct:
   Description: "Prefer Data.define over Struct.new for values."

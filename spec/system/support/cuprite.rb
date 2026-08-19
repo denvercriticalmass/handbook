@@ -1,18 +1,8 @@
 require "capybara/cuprite"
 
-sandboxless_chrome = { "no-sandbox" => nil, "disable-dev-shm-usage" => nil }
-
-Capybara.register_driver(:cuprite) do |app|
-  Capybara::Cuprite::Driver.new(
-    app,
-    browser_options: ENV["CI"] ? sandboxless_chrome : {},
-    process_timeout: 15,
-    inspector: ENV["INSPECTOR"]
-  )
-end
-
-Capybara.default_driver = :cuprite
-Capybara.javascript_driver = :cuprite
+# Only Capybara-level settings belong here. Rails re-registers the :cuprite
+# driver itself inside driven_by, so any register_driver block for that name is
+# silently discarded -- driver options go through driven_by in system_helper.
 Capybara.default_max_wait_time = 2
 Capybara.disable_animation = true
 Capybara.save_path = Rails.root.join("tmp/capybara")
