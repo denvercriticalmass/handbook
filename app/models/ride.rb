@@ -1,6 +1,3 @@
-# When the next ride is. Sunday afternoons through the dark half of the year,
-# Friday evenings otherwise. The static site stopped winter at March; April is
-# included here at Joe's request.
 Ride = Data.define(:on) do
   Season = Data.define(:weekday, :gathers_at, :rides_at)
 
