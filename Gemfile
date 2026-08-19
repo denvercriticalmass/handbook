@@ -97,4 +97,7 @@ group :development do
 
   # Opens sent mail in the browser instead of delivering it [https://github.com/ryanb/letter_opener]
   gem "letter_opener"
+
+  # Reloads the page in place as files change [https://github.com/hotwired/spark]
+  gem "hotwire-spark"
 end
