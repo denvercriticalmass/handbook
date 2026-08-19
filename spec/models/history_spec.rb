@@ -18,6 +18,19 @@ RSpec.describe History do
     expect(history.entries.map(&:change)).to include("Title")
   end
 
+  it "names who made the change" do
+    admin = create(:user, name: "Corker Joe")
+    PaperTrail.request(whodunnit: admin.id) { guide.update!(title: "Corking") }
+
+    expect(history.entries.first.summary).to eq("Title by Corker Joe")
+  end
+
+  it "says only what changed when nobody was recorded" do
+    guide.update!(title: "Corking")
+
+    expect(history.entries.first.summary).to eq("Title")
+  end
+
   it "records when the guide was written" do
     expect(history.entries.map(&:change)).to include("Created")
   end

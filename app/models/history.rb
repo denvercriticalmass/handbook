@@ -1,12 +1,18 @@
 class History
-  Entry = Data.define(:at, :change)
+  Entry = Data.define(:at, :change, :by) do
+    def summary
+      by ? "#{change} by #{by}" : change
+    end
+  end
 
   def initialize(record)
     @record = record
   end
 
   def entries
-    @entries ||= versions.sort_by(&:created_at).reverse.map { Entry.new(at: it.created_at, change: change_in(it)) }
+    @entries ||= versions.sort_by(&:created_at).reverse.map do
+      Entry.new(at: it.created_at, change: change_in(it), by: names[it.whodunnit])
+    end
   end
 
   private
@@ -14,7 +20,12 @@ class History
     attr_reader :record
 
     def versions
-      record.versions + (record.rich_text_body&.versions || [])
+      @versions ||= record.versions + (record.rich_text_body&.versions || [])
+    end
+
+    # Seeds and console edits leave no whodunnit, so a name can be missing.
+    def names
+      @names ||= User.where(id: versions.filter_map(&:whodunnit)).pluck(:id, :name).to_h
     end
 
     def change_in(version)

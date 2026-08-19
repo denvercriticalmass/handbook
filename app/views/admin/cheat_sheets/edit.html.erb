@@ -1,3 +1,5 @@
 <h1>Edit cheat sheet</h1>
 
 <%= render "form", cheat_sheet: @cheat_sheet, url: admin_cheat_sheet_path(@cheat_sheet) %>
+
+<p><%= link_to "History", history_admin_cheat_sheet_path(@cheat_sheet) %></p>

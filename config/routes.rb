@@ -16,8 +16,13 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :invitations, only: %i[ new create ]
     resources :users, only: %i[ index update ]
-    resources :guides, only: %i[ index new create edit update ]
-    resources :cheat_sheets, only: %i[ index new create edit update ]
+    resources :guides, only: %i[ index new create edit update ] do
+      get :history, on: :member
+    end
+
+    resources :cheat_sheets, only: %i[ index new create edit update ] do
+      get :history, on: :member
+    end
     resource :account, only: %i[ show update ]
 
     root "accounts#show"

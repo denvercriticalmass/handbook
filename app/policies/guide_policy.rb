@@ -14,4 +14,5 @@ class GuidePolicy < ApplicationPolicy
   alias_method :new?, :create?
   alias_method :update?, :create?
   alias_method :edit?, :create?
+  alias_method :history?, :create?
 end

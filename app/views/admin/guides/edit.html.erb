@@ -1,3 +1,5 @@
 <h1>Edit guide</h1>
 
 <%= render "form", guide: @guide, url: admin_guide_path(@guide) %>
+
+<p><%= link_to "History", history_admin_guide_path(@guide) %></p>

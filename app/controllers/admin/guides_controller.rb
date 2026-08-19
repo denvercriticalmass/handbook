@@ -39,6 +39,13 @@ class Admin::GuidesController < Admin::BaseController
     end
   end
 
+  def history
+    @guide = Guide.find(params[:id])
+    authorize @guide
+
+    @history = History.new(@guide)
+  end
+
   private
 
     def guide_params
