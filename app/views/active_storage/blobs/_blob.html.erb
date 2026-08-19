@@ -1,6 +1,8 @@
-<figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
-  <% if blob.representable? %>
-    <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
+<figure class="attachment attachment--<%= blob.image? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
+  <% if blob.image? %>
+    <%# Serves the original. Resized variants need the image_processing gem and a %>
+    <%# vips or imagemagick binary on the host, neither of which is installed. %>
+    <%= image_tag blob %>
   <% end %>
 
   <figcaption class="attachment__caption">
