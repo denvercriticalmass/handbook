@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   get "signin", to: "sessions#new", as: :signin
   get "signout", to: "sessions#signout", as: :signout
   get "signup", to: "registrations#new", as: :signup
+
+  # One click into the admin screens while working locally.
+  post "dev/signin", to: "dev/sessions#create", as: :dev_signin if Rails.env.development?
   post "signup", to: "registrations#create"
   get "login", to: redirect("/signin")
   get "logout", to: redirect("/signout")
