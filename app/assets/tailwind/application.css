@@ -78,25 +78,22 @@
 
   th,
   td {
-    padding: 0.5rem 0.75rem 0.5rem 0;
+    padding: 0.5rem 0.5rem 0.5rem 0;
     text-align: start;
     vertical-align: top;
     border-block-end: 1px solid var(--line);
-    /* An email address has nowhere to wrap, so it would otherwise push the
-       controls column off the side of a phone. */
-    overflow-wrap: break-word;
+  }
+
+  /* An email address is one long token with nowhere to wrap, so it sets the
+     table's minimum width and pushes the controls off the side of a phone.
+     Breaking mid-token costs nothing on an address and leaves prose alone,
+     since a phrase already breaks at its spaces. */
+  td a {
+    overflow-wrap: anywhere;
   }
 
   th {
     font-weight: 600;
-  }
-
-  /* Below this an email address is wider than its share of the table, so let
-     it break mid-word rather than scroll the page sideways. */
-  @media (width <= 26rem) {
-    td {
-      overflow-wrap: anywhere;
-    }
   }
 
   th:last-child,
@@ -111,7 +108,7 @@
   td input[type="submit"],
   td button {
     min-height: 2.25rem;
-    padding: 0.25rem 0.75rem;
+    padding: 0.25rem 0.6rem;
     white-space: nowrap;
   }
 

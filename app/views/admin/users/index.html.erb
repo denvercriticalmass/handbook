@@ -14,7 +14,7 @@
       <tr>
         <td>
           <%= user.name %><br>
-          <%= user.email_address %>
+          <%= mail_to user.email_address %>
         </td>
 
         <td><%= user.role %><%= ", suspended" unless user.active? %></td>
