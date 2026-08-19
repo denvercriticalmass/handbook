@@ -1,6 +1,3 @@
-# Development only. The route is declared inside a Rails.env.development? guard,
-# so this controller is unreachable anywhere else, and the check below means it
-# stays unreachable if that guard is ever loosened.
 class Dev::SessionsController < ApplicationController
   allow_unauthenticated_access
 
