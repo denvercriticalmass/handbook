@@ -30,13 +30,29 @@
 
   nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
     max-width: 65ch;
     margin-inline: auto;
     padding: 0.75rem 1rem;
     border-block-end: 1px solid var(--line);
+  }
+
+  /* The links wrap among themselves. The menu stays put on the first line
+     rather than being pushed onto one of its own. */
+  nav > ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  nav > details {
+    flex: none;
   }
 
   nav form {

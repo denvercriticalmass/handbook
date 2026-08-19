@@ -1,9 +1,14 @@
 <% if authenticated? %>
   <nav>
-    <%= link_to "Handbook", root_path %>
-    <%= link_to "Guides", admin_guides_path %>
-    <%= link_to "Cheat sheets", admin_cheat_sheets_path %>
-    <%= link_to "Admins", admin_users_path if policy(User).index? %>
+    <ul>
+      <li><%= link_to "Handbook", root_path %></li>
+      <li><%= link_to "Guides", admin_guides_path %></li>
+      <li><%= link_to "Cheat sheets", admin_cheat_sheets_path %></li>
+
+      <% if policy(User).index? %>
+        <li><%= link_to "Admins", admin_users_path %></li>
+      <% end %>
+    </ul>
 
     <details data-controller="menu">
       <summary><%= Current.user.name %></summary>
@@ -17,7 +22,9 @@
 <% elsif Rails.env.development? %>
   <%# Public pages have no way in on purpose. This is one while working. %>
   <nav>
-    <%= link_to "Handbook", root_path %>
-    <%= link_to "Sign in", signin_path %>
+    <ul>
+      <li><%= link_to "Handbook", root_path %></li>
+      <li><%= link_to "Sign in", signin_path %></li>
+    </ul>
   </nav>
 <% end %>
