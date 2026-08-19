@@ -1,1 +1,62 @@
 <h1>Denver Critical Mass</h1>
+
+<p>
+  A worldwide protest ride for safe streets and every person's right to move with dignity outside of a car.
+</p>
+
+<h2>Next ride</h2>
+
+<p>
+  <strong><%= @ride.on.strftime("%A, %B %-d") %></strong><br>
+  Gather <%= @ride.gathers_at %>, ride <%= @ride.rides_at %>.
+</p>
+
+<p>
+  Sunken Gardens Park, in front of West High School on Elati St.
+</p>
+
+<h2>Start here</h2>
+
+<p>
+  We gather in the street, there are some announcements, then we ride together at a party pace. Bring lights, water, and
+  whatever wheels help you move comfortably. The ride is typically 14 miles, 8&ndash;12mph, and always ends at the
+  meeting spot.
+</p>
+
+<p><%= link_to "Read the guides", guides_path %></p>
+
+<h2>Why we ride</h2>
+
+<h3>Safe streets are a human right</h3>
+
+<p>
+  Everyone deserves to feel safe on the street, even and especially when they are not using a car.
+</p>
+
+<h3>People over machines</h3>
+
+<p>
+  We challenge car-centered design and planning, and we demand better from our leaders.
+</p>
+
+<h3>Accountable city leadership</h3>
+
+<p>
+  We want real traffic calming, protected bike lanes, actual bus rapid transit, and safe streets that protect people,
+  not "traffic flow."
+</p>
+
+<h3>All on the same team</h3>
+
+<p>
+  This is not bike supremacy. Pedestrians, mobility-device users, bicycles, e-bikes, skaters, scooter riders, transit
+  riders, and more all deserve safe, comfortable streets with dignity.
+</p>
+
+<h2>Want to lead a ride?</h2>
+
+<p>
+  Anyone can. Critical Mass has no governing body, and Denver Critical Mass isn't a chapter of anything. Plan and test
+  the route first, then reach out at least one week ahead so we can coordinate details:
+  <%= link_to "denvercriticalmass@gmail.com", "mailto:denvercriticalmass@gmail.com" %>.
+</p>
