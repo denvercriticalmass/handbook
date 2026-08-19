@@ -43,7 +43,8 @@
     margin: 0;
   }
 
-  nav input[type="submit"] {
+  nav input[type="submit"],
+  nav button {
     min-height: 2.25rem;
     padding: 0.25rem 0.75rem;
   }
@@ -128,7 +129,8 @@
     color: inherit;
   }
 
-  input[type="submit"] {
+  input[type="submit"],
+  button:not(.trix-button) {
     min-height: 2.75rem;
     padding: 0.5rem 1.25rem;
     border: 1px solid currentColor;
