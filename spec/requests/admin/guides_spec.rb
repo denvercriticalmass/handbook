@@ -13,6 +13,14 @@ RSpec.describe "Admin guides" do
     expect(response).to redirect_to(new_session_path)
   end
 
+  it "is reachable from the admin nav" do
+    sign_in_as admin
+
+    get admin_root_path
+
+    expect(response.body).to include(admin_guides_path)
+  end
+
   it "lets an admin write one" do
     sign_in_as admin
 

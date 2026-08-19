@@ -1,0 +1,9 @@
+<h1>Cheat sheets</h1>
+
+<p><%= link_to "Write a cheat sheet", new_admin_cheat_sheet_path %></p>
+
+<ul>
+  <% @cheat_sheets.each do |cheat_sheet| %>
+    <li><%= link_to cheat_sheet.title, edit_admin_cheat_sheet_path(cheat_sheet) %></li>
+  <% end %>
+</ul>

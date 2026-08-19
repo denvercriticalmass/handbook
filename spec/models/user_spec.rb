@@ -28,6 +28,13 @@ RSpec.describe User do
     expect { user.update!(active: false) }.to change { user.sessions.count }.to(0)
   end
 
+  it "does not be destroyed out from under what it wrote" do
+    user = create(:user)
+    create(:guide, created_by: user)
+
+    expect(user.destroy).to be(false)
+  end
+
   it "leaves sessions alone on an unrelated update" do
     user = create(:user)
     user.sessions.create!
