@@ -25,7 +25,11 @@ RSpec.describe Ride do
     end
 
     it "gathers in the afternoon while it is still light" do
-      expect(ride.gathers_at).to eq("1:30pm")
+      expect(ride.gathers_at).to eq("12:30pm")
+    end
+
+    it "rolls at one" do
+      expect(ride.rides_at).to eq("1:00pm")
     end
 
     it "knows it is winter" do
