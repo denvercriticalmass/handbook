@@ -30,7 +30,7 @@
 
   nav {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: 1rem;
     max-width: 65ch;
@@ -39,16 +39,81 @@
     border-block-end: 1px solid var(--line);
   }
 
-  /* The links wrap among themselves. The menu stays put on the first line
-     rather than being pushed onto one of its own. */
+  /* One row that scrolls, never a second row with one orphan on it. The
+     links need 470px at a 414px viewport and no phone is wider than they are. */
   nav > ul {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem 1rem;
+    gap: 1rem;
+    overflow-x: auto;
     margin: 0;
     padding: 0;
     list-style: none;
+    scrollbar-width: none;
+  }
+
+  nav > ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  nav > ul > li {
+    flex: none;
+    white-space: nowrap;
+  }
+
+  /* A phone gets a bottom bar: primary navigation in thumb reach rather than
+     the far corner. Apple caps a tab bar at five items on iPhone and asks for
+     44pt targets; Material asks for three to five destinations. We have five. */
+  @media (width < 40rem) {
+    nav {
+      position: fixed;
+      inset: auto 0 0;
+      z-index: 20;
+      gap: 0;
+      max-width: none;
+      padding: 0 0 env(safe-area-inset-bottom);
+      border-block-start: 1px solid var(--line);
+      border-block-end: 0;
+      background-color: var(--bg);
+    }
+
+    nav > ul {
+      flex: 1;
+      overflow: visible;
+      gap: 0;
+    }
+
+    nav > ul > li,
+    nav > details {
+      flex: 1;
+    }
+
+    nav > ul > li > a,
+    nav > details > summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3.25rem;
+      padding-inline: 0.25rem;
+      font-size: 0.8125rem;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    nav > details > summary {
+      border: 0;
+      border-radius: 0;
+    }
+
+    nav details ul {
+      inset-block-end: 100%;
+      inset-inline-end: 0.5rem;
+      margin-block: 0 0.35rem;
+    }
+
+    main {
+      padding-block-end: calc(5rem + env(safe-area-inset-bottom));
+    }
   }
 
   nav > details {
