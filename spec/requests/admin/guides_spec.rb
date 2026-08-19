@@ -36,6 +36,14 @@ RSpec.describe "Admin guides" do
     expect(Guide.sole.created_by).to eq(admin)
   end
 
+  it "stores the body as rich text" do
+    sign_in_as admin
+
+    post admin_guides_path, params: { guide: { title: "Corking", body: "<div>Stand here.</div>" } }
+
+    expect(Guide.sole.body.to_plain_text).to eq("Stand here.")
+  end
+
   it "refuses one with no title" do
     sign_in_as admin
 

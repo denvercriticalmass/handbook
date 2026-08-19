@@ -3,7 +3,7 @@
   <%= form.text_field :title, required: true, autofocus: true %>
 
   <%= form.label :body %>
-  <%= form.text_area :body, rows: 16 %>
+  <%= form.rich_textarea :body %>
 
   <%= form.submit "Save" %>
 <% end %>

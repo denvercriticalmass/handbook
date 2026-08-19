@@ -9,6 +9,10 @@ RSpec.describe Guide do
     expect(build(:guide)).to be_valid
   end
 
+  it "keeps its body as rich text" do
+    expect(build(:guide, body: "<div>Stand <strong>here</strong></div>").body.to_plain_text).to eq("Stand here")
+  end
+
   it "knows who wrote it" do
     expect(build(:guide).created_by).to be_a(User)
   end

@@ -17,6 +17,14 @@ RSpec.describe "Cheat sheets" do
     expect(response.body).to include("Radio channels")
   end
 
+  it "renders the formatting an admin wrote" do
+    cheat_sheet = create(:cheat_sheet, body: "<div>Channel <strong>1</strong></div>")
+
+    get cheat_sheet_path(cheat_sheet)
+
+    expect(response.body).to include("<strong>1</strong>")
+  end
+
   it "keeps the author to itself" do
     cheat_sheet = create(:cheat_sheet, created_by: create(:user, email_address: "corker@example.com"))
 

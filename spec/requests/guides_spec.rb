@@ -17,6 +17,22 @@ RSpec.describe "Guides" do
     expect(response.body).to include("Corking a junction")
   end
 
+  it "renders the formatting an admin wrote" do
+    guide = create(:guide, body: "<div>Stand <strong>here</strong></div>")
+
+    get guide_path(guide)
+
+    expect(response.body).to include("<strong>here</strong>")
+  end
+
+  it "strips a script tag out of a body" do
+    guide = create(:guide, body: "<div>ok</div><script>alert(1)</script>")
+
+    get guide_path(guide)
+
+    expect(response.body).not_to include("<script>")
+  end
+
   it "keeps the author to itself" do
     guide = create(:guide, created_by: create(:user, email_address: "corker@example.com"))
 
