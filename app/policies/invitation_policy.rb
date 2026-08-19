@@ -1,5 +1,5 @@
-# Any admin may invite another admin. Stated as both roles rather than "has an
-# account", so a future non-admin role doesn't silently inherit the right.
+# Names both roles rather than checking for an account, so a future non-admin
+# role doesn't inherit the right.
 class InvitationPolicy < ApplicationPolicy
   def create?
     user&.admin? || user&.superadmin?

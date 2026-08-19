@@ -1,7 +1,7 @@
-# The one gate every registration path goes through, password or OmniAuth.
+# Both registration paths call this, password and OmniAuth.
 #
-# Deliberately not a validation on User: specs and seeds create users directly
-# as preconditions, and a validation would reject them.
+# Not a validation on User: specs and seeds create users directly, and a
+# validation would reject them.
 class Registration
   def initialize(email_address:, password:, token: nil)
     @email_address = email_address.to_s.strip.downcase
@@ -22,8 +22,8 @@ class Registration
       User.count.zero? && email_address == superadmin_email
     end
 
-    # Fails closed. With SUPERADMIN_EMAIL unset this is nil, which no submitted
-    # address can equal, so nobody can claim the first account.
+    # Unset means nil, which no submitted address equals, so registration stays
+    # closed.
     def superadmin_email
       ENV["SUPERADMIN_EMAIL"].to_s.strip.downcase.presence
     end
@@ -43,9 +43,8 @@ class Registration
       end
     end
 
-    # Both keys, so knowing an invited address isn't enough on its own. The
-    # blank guard matters if the token column is ever made nullable, since
-    # find_by would then match a row instead of nothing.
+    # Matches on both keys. The blank guard matters if token is ever made
+    # nullable, since find_by would then match a row.
     def usable_invitation
       return if token.blank?
 
