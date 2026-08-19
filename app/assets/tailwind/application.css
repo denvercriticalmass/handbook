@@ -106,13 +106,15 @@
 
   input,
   button,
+  textarea,
   input[type="submit"] {
     font: inherit;
   }
 
   input[type="email"],
   input[type="password"],
-  input[type="text"] {
+  input[type="text"],
+  textarea {
     display: block;
     width: 100%;
     min-height: 2.75rem;
