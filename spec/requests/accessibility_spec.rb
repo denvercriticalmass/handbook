@@ -6,7 +6,8 @@ pages = {
   "the homepage" => "/",
   "sign in" => "/signin",
   "sign up" => "/signup",
-  "the password reset form" => "/passwords/new"
+  "the password reset form" => "/passwords/new",
+  "the guides list" => "/guides"
 }
 
 RSpec.describe "Accessibility" do

@@ -1,5 +1,8 @@
 # A singular resource with no id, so an admin can only ever reach their own.
 class Admin::AccountsController < Admin::BaseController
+  # There is no id to authorize against; the record is always Current.user.
+  skip_after_action :verify_authorized
+
   def show
     @account = Current.user
   end
