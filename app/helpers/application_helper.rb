@@ -1,8 +1,7 @@
 module ApplicationHelper
-  # Changes whenever the css is rebuilt, which is every deploy, so the worker
-  # reinstalls and sweeps the asset cache it superseded.
+  # Changes when the css is rebuilt, so a deploy reinstalls the worker.
   def service_worker_release
-    Rails.application.assets.load_path.find("tailwind.css")&.digest.to_s
+    Rails.application.assets.load_path.find("tailwind.css")&.digest || Rails.env
   end
 
   def map_url(waypoint)
