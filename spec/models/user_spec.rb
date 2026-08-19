@@ -20,4 +20,18 @@ RSpec.describe User do
   it "can be suspended" do
     expect(build(:user, :suspended)).not_to be_active
   end
+
+  it "throws out a suspended admin who is already signed in" do
+    user = create(:user)
+    user.sessions.create!
+
+    expect { user.update!(active: false) }.to change { user.sessions.count }.to(0)
+  end
+
+  it "leaves sessions alone on an unrelated update" do
+    user = create(:user)
+    user.sessions.create!
+
+    expect { user.update!(email_address: "moved@example.com") }.not_to change { user.sessions.count }
+  end
 end
