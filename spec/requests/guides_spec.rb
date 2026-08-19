@@ -51,6 +51,22 @@ RSpec.describe "Guides" do
     expect(response).to have_http_status(:ok)
   end
 
+  it "lives at its slug" do
+    guide = create(:guide, title: "Corking a junction")
+
+    get guide_path(guide)
+
+    expect(request.path).to eq("/guides/corking-a-junction")
+  end
+
+  it "still answers to an id, so an old link holds" do
+    guide = create(:guide, title: "Corking a junction")
+
+    get "/guides/#{guide.id}"
+
+    expect(response).to have_http_status(:ok)
+  end
+
   it "keeps the author to itself" do
     guide = create(:guide, created_by: create(:user, email_address: "corker@example.com"))
 

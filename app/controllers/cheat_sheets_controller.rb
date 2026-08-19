@@ -4,6 +4,6 @@ class CheatSheetsController < PublicController
   end
 
   def show
-    @cheat_sheet = CheatSheet.find(params[:id])
+    @cheat_sheet = CheatSheet.friendly.find(params[:id])
   end
 end

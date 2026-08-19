@@ -26,6 +26,22 @@ RSpec.describe Guide do
     expect(described_class.search("drivers")).to eq([ guide ])
   end
 
+  it "takes its slug from its title" do
+    expect(create(:guide, title: "Corking a junction").slug).to eq("corking-a-junction")
+  end
+
+  it "keeps the slug when the title is fixed, so a shared link still works" do
+    guide = create(:guide, title: "Korking")
+
+    expect { guide.update!(title: "Corking") }.not_to change(guide, :slug)
+  end
+
+  it "answers to its slug" do
+    guide = create(:guide, title: "Corking a junction")
+
+    expect(described_class.friendly.find("corking-a-junction")).to eq(guide)
+  end
+
   it "keeps a version of every edit" do
     guide = create(:guide, title: "Korking")
 
