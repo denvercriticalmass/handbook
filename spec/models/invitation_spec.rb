@@ -1,6 +1,35 @@
 require "rails_helper"
 
 RSpec.describe Invitation do
+  describe ".outstanding" do
+    it "leaves out the ones already accepted" do
+      create(:invitation, :accepted)
+      waiting = create(:invitation)
+
+      expect(described_class.outstanding).to eq([ waiting ])
+    end
+
+    it "keeps an expired one, since it still needs clearing up" do
+      expired = create(:invitation, :expired)
+
+      expect(described_class.outstanding).to eq([ expired ])
+    end
+  end
+
+  describe "#reissue" do
+    it "pushes the expiry out a week" do
+      invitation = create(:invitation, :expired)
+
+      expect { invitation.reissue }.to change(invitation, :usable?).to(true)
+    end
+
+    it "keeps the token, so a link already sent still works" do
+      invitation = create(:invitation)
+
+      expect { invitation.reissue }.not_to change(invitation, :token)
+    end
+  end
+
   it "is usable when freshly created" do
     expect(build(:invitation)).to be_usable
   end

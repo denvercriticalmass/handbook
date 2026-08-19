@@ -42,6 +42,24 @@ RSpec.describe "Admin users" do
       expect(response).to have_http_status(:ok)
     end
 
+    it "lists an invitation nobody has accepted" do
+      create(:invitation, email_address: "corker@example.com")
+      sign_in_as superadmin
+
+      get admin_users_path
+
+      expect(response.body).to include("corker@example.com")
+    end
+
+    it "leaves out an invitation already accepted" do
+      create(:invitation, :accepted, email_address: "done@example.com")
+      sign_in_as superadmin
+
+      get admin_users_path
+
+      expect(response.body).not_to include("done@example.com")
+    end
+
     it "names each admin" do
       create(:user, name: "Corker Joe")
       sign_in_as superadmin
