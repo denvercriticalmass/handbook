@@ -1,5 +1,4 @@
-# A one-time, time-limited credential. Treat the token like a password reset
-# token: single use, expires, never logged.
+# The token is a single-use credential. Never log it.
 class Invitation < ApplicationRecord
   LIFESPAN = 1.week
 
