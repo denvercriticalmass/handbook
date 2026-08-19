@@ -2,13 +2,13 @@
 
 <%= render "search" %>
 
-<p>
+<nav>
   <%= link_to "All", waypoints_path %>
 
   <% Waypoint.categories.each_key do |category| %>
-    / <%= link_to category.humanize, waypoints_path(category:) %>
+    <%= link_to category.humanize, waypoints_path(category:) %>
   <% end %>
-</p>
+</nav>
 
 <% if @waypoints.any? %>
   <% @waypoints.group_by(&:category).each do |category, waypoints| %>
