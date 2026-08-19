@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_19_173716) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_19_175103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -147,6 +147,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_173716) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  create_table "waypoints", force: :cascade do |t|
+    t.integer "category", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.bigint "created_by_id", null: false
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.string "name", null: false
+    t.text "note"
+    t.string "slug", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_waypoints_on_created_by_id"
+    t.index ["slug"], name: "index_waypoints_on_slug", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cheat_sheets", "users", column: "created_by_id"
@@ -154,4 +168,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_173716) do
   add_foreign_key "invitations", "users", column: "invited_by_id"
   add_foreign_key "sessions", "users"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "waypoints", "users", column: "created_by_id"
 end
