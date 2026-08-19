@@ -21,7 +21,7 @@ class Admin::AccountsController < Admin::BaseController
 
     # A blank password field means "leave it alone", not "set it to blank".
     def account_params
-      submitted = params.permit(:email_address, :password, :password_confirmation)
+      submitted = params.permit(:name, :email_address, :password, :password_confirmation)
       submitted[:password].blank? ? submitted.except(:password, :password_confirmation) : submitted
     end
 end

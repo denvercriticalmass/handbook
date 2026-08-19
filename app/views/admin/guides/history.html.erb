@@ -1,0 +1,12 @@
+<h1><%= @guide.title %></h1>
+
+<p><%= link_to "Back to editing", edit_admin_guide_path(@guide) %></p>
+
+<h2>History</h2>
+
+<dl>
+  <% @history.entries.each do |entry| %>
+    <dt><%= entry.at.strftime("%-d %b %Y, %-l:%M%P") %></dt>
+    <dd><%= entry.summary %></dd>
+  <% end %>
+</dl>

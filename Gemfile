@@ -33,6 +33,9 @@ gem "pundit"
 # Postgres full-text search [https://github.com/Casecommons/pg_search]
 gem "pg_search"
 
+# Versioning for edited content [https://github.com/paper-trail-gem/paper_trail]
+gem "paper_trail"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

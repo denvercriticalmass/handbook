@@ -1,0 +1,12 @@
+<h1><%= @cheat_sheet.title %></h1>
+
+<p><%= link_to "Back to editing", edit_admin_cheat_sheet_path(@cheat_sheet) %></p>
+
+<h2>History</h2>
+
+<dl>
+  <% @history.entries.each do |entry| %>
+    <dt><%= entry.at.strftime("%-d %b %Y, %-l:%M%P") %></dt>
+    <dd><%= entry.summary %></dd>
+  <% end %>
+</dl>

@@ -1,6 +1,9 @@
 <h1>My account</h1>
 
 <%= form_with url: admin_account_path, method: :patch do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name, value: @account.name, required: true, autocomplete: "name" %>
+
   <%= form.label :email_address, "Email address" %>
   <%= form.email_field :email_address, value: @account.email_address, required: true, autocomplete: "username" %>
 

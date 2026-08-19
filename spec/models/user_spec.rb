@@ -28,7 +28,11 @@ RSpec.describe User do
     expect { user.update!(active: false) }.to change { user.sessions.count }.to(0)
   end
 
-  it "does not be destroyed out from under what it wrote" do
+  it "needs a name" do
+    expect(build(:user, name: "")).not_to be_valid
+  end
+
+  it "refuses a destroy while it has authored content" do
     user = create(:user)
     create(:guide, created_by: user)
 

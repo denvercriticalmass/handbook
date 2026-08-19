@@ -1,6 +1,8 @@
 class CheatSheet < ApplicationRecord
   include Searchable
 
+  has_paper_trail on: %i[ create update destroy ]
+
   belongs_to :created_by, class_name: "User"
   has_rich_text :body
 

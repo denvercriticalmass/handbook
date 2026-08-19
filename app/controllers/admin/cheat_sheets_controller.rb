@@ -39,6 +39,13 @@ class Admin::CheatSheetsController < Admin::BaseController
     end
   end
 
+  def history
+    @cheat_sheet = CheatSheet.find(params[:id])
+    authorize @cheat_sheet
+
+    @history = History.new(@cheat_sheet)
+  end
+
   private
 
     def cheat_sheet_params

@@ -30,6 +30,14 @@ RSpec.describe "My admin account" do
     expect(response.body).not_to include("someone@else.example")
   end
 
+  it "changes the name" do
+    sign_in_as admin
+
+    patch admin_account_path, params: { name: "Corker Joe" }
+
+    expect(admin.reload.name).to eq("Corker Joe")
+  end
+
   it "changes the address" do
     sign_in_as admin
 

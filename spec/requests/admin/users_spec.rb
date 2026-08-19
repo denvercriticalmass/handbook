@@ -24,6 +24,15 @@ RSpec.describe "Admin users" do
 
       expect(response).to have_http_status(:ok)
     end
+
+    it "names each admin" do
+      create(:user, name: "Corker Joe")
+      sign_in_as superadmin
+
+      get admin_users_path
+
+      expect(response.body).to include("Corker Joe")
+    end
   end
 
   describe "suspending" do

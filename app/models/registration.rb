@@ -3,9 +3,10 @@
 # Not a validation on User: specs and seeds create users directly, and a
 # validation would reject them.
 class Registration
-  def initialize(email_address:, password:, token: nil)
+  def initialize(email_address:, password:, name:, token: nil)
     @email_address = email_address.to_s.strip.downcase
     @password = password
+    @name = name
     @token = token
   end
 
@@ -16,7 +17,7 @@ class Registration
 
   private
 
-    attr_reader :email_address, :password, :token
+    attr_reader :email_address, :password, :name, :token
 
     def founding?
       User.count.zero? && email_address == superadmin_email
@@ -29,7 +30,7 @@ class Registration
     end
 
     def found_the_first_account
-      User.create(email_address:, password:, role: :superadmin)
+      User.create(email_address:, password:, name:, role: :superadmin)
     end
 
     def accept_invitation
@@ -37,7 +38,7 @@ class Registration
       return if invitation.nil?
 
       User.transaction do
-        User.create(email_address:, password:).tap do
+        User.create(email_address:, password:, name:).tap do
           invitation.update!(accepted_at: Time.current) if it.persisted?
         end
       end

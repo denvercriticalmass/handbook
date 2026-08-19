@@ -2,7 +2,12 @@
 #
 # The ride guidelines are a Guide record rather than homepage markup, so they
 # stay editable and searchable like everything else.
-author = User.first || User.create!(email_address: "joe@joesak.com", password: "bike lanes now", role: :superadmin)
+author = User.first || User.create!(
+  name: "Joe",
+  email_address: "joe@joesak.com",
+  password: "bike lanes now",
+  role: :superadmin
+)
 
 Guide.find_or_create_by!(title: "Ride guidelines") do |guide|
   guide.created_by = author

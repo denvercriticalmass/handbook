@@ -5,6 +5,7 @@ class Admin::BaseController < ApplicationController
   layout "admin"
 
   before_action :require_active_account
+  before_action :set_paper_trail_whodunnit
 
   rescue_from Pundit::NotAuthorizedError, with: :refuse
 
@@ -14,6 +15,11 @@ class Admin::BaseController < ApplicationController
   after_action :verify_authorized
 
   private
+
+    # paper_trail looks for current_user, which this app doesn't have.
+    def user_for_paper_trail
+      Current.user&.id
+    end
 
     def require_active_account
       terminate_session unless Current.user&.active?
