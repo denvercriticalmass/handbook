@@ -10,6 +10,7 @@ class Invitation < ApplicationRecord
   normalizes :email_address, with: -> { it.strip.downcase }
 
   scope :usable, -> { where(accepted_at: nil).where(expires_at: Time.current..) }
+  scope :outstanding, -> { where(accepted_at: nil).order(created_at: :desc) }
 
   def accepted?
     accepted_at.present?
@@ -21,5 +22,9 @@ class Invitation < ApplicationRecord
 
   def usable?
     !accepted? && !expired?
+  end
+
+  def reissue
+    update!(expires_at: LIFESPAN.from_now)
   end
 end
