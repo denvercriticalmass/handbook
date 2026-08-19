@@ -1,3 +1,7 @@
+<% if flash[:signed_out] %>
+  <div data-controller="signed-out"></div>
+<% end %>
+
 <h1>Sign in</h1>
 
 <%= form_with url: session_url do |form| %>

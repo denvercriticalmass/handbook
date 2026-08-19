@@ -40,18 +40,19 @@ RSpec.describe "Working offline" do
     expect(response.body).to include("No signal")
   end
 
-  it "marks a public page as safe to keep" do
-    get cheat_sheets_path
-
-    expect(response.headers["X-Offline-Cache"]).to eq("allowed")
-  end
-
-  it "refuses to mark a page carrying the admin nav" do
+  it "tells the worker to forget cached pages when a session ends" do
     user = create(:user, password: "password")
     post session_path, params: { email_address: user.email_address, password: "password" }
 
+    delete session_path
+    follow_redirect!
+
+    expect(response.body).to include(%(data-controller="signed-out"))
+  end
+
+  it "offers the cheat sheets list for prefetching" do
     get cheat_sheets_path
 
-    expect(response.headers["X-Offline-Cache"]).to be_nil
+    expect(response.body).to include(%(data-controller="prefetch"))
   end
 end
