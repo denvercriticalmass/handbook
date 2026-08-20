@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def existing_tags
+    ActsAsTaggableOn::Tag.pluck(:name)
+  end
+
   def google_sign_in?
     Rails.application.credentials.dig(:google, :client_id).present?
   end
