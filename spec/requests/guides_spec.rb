@@ -51,6 +51,13 @@ RSpec.describe "Guides" do
     expect(response).to have_http_status(:ok)
   end
 
+  # A phone photo at full size is megabytes over a rider's data connection.
+  it "resizes an attached image rather than serving the original" do
+    get guide_path(guide_with_an_attached_image)
+
+    expect(Nokogiri::HTML(response.body).at("img")["src"]).to include("/representations/")
+  end
+
   it "lives at its slug" do
     guide = create(:guide, title: "Corking a junction")
 

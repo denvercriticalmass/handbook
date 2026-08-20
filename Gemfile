@@ -30,6 +30,9 @@ gem "bcrypt", "~> 3.1.7"
 # Per-resource authorization policies [https://github.com/varvet/pundit]
 gem "pundit"
 
+# Resizes Trix image attachments, using the libvips already in the Dockerfile
+gem "image_processing", "~> 1.2"
+
 # Ships the nightly database dump to S3-compatible object storage
 gem "aws-sdk-s3", require: false
 
