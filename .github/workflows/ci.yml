@@ -68,7 +68,7 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        run: bin/rails db:test:prepare && bin/rspec
+        run: bin/rails tailwindcss:build db:test:prepare && bin/rspec
 
   lint:
     runs-on: ubuntu-latest
