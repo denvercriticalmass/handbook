@@ -1,6 +1,6 @@
 module ApplicationHelper
   def google_sign_in?
-    ENV["GOOGLE_CLIENT_ID"].present?
+    Rails.application.credentials.dig(:google, :client_id).present?
   end
 
   # Changes when the css is rebuilt, so a deploy reinstalls the worker.

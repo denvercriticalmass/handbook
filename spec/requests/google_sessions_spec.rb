@@ -93,16 +93,23 @@ RSpec.describe "Signing in with Google" do
     expect(response).to redirect_to(new_session_path)
   end
 
+  # CI has no master key, so neither example can rely on the real credentials.
+  def configured_client_id(id)
+    allow(Rails.application.credentials).to receive(:dig).with(:google, :client_id).and_return(id)
+  end
+
   it "offers the button once a client id is configured" do
-    ClimateControl.modify(GOOGLE_CLIENT_ID: "handbook.apps.googleusercontent.com") do
-      get "/signin"
-    end
+    configured_client_id("handbook.apps.googleusercontent.com")
+
+    get "/signin"
 
     expect(response.body).to include("Continue with Google")
   end
 
   it "hides the button when no client id is configured" do
-    ClimateControl.modify(GOOGLE_CLIENT_ID: nil) { get "/signin" }
+    configured_client_id(nil)
+
+    get "/signin"
 
     expect(response.body).not_to include("Continue with Google")
   end

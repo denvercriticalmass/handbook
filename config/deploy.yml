@@ -22,8 +22,6 @@ env:
     - RAILS_MASTER_KEY
     - POSTGRES_PASSWORD
     - RESEND_API_KEY
-    - GOOGLE_CLIENT_ID
-    - GOOGLE_CLIENT_SECRET
   clear:
     SOLID_QUEUE_IN_PUMA: true
     APP_HOST: denvercriticalmass.org
