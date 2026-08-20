@@ -1,4 +1,15 @@
-<h1>Create the first account</h1>
+<% if params[:token].present? %>
+  <h1>Accept your invitation</h1>
+<% else %>
+  <h1>Create the first account</h1>
+<% end %>
+
+<% if google_sign_in? %>
+  <%# Turbo cannot follow the cross-origin redirect to Google. %>
+  <%= button_to "Continue with Google",
+        google_sign_in_path(token: params[:token]),
+        data: { turbo: false } %>
+<% end %>
 
 <%= form_with url: signup_path do |form| %>
   <%= form.hidden_field :token, value: params[:token] %>
