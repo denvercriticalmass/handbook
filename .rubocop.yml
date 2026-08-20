@@ -57,6 +57,11 @@ RSpec/MultipleExpectations:
     - spec/system/**/*.rb
     - spec/rubocop/**/*.rb
 
+# A yaml file has no class to name.
+RSpec/DescribeClass:
+  Exclude:
+    - spec/config/**/*.rb
+
 Handbook/PreferData:
   Description: "Prefer Data.define over Struct.new or a frozen record hash."
   Enabled: true
