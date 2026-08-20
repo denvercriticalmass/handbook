@@ -610,6 +610,7 @@
     padding-inline-start: 0.25rem;
     border-inline-start: 1px solid var(--line);
     text-decoration: none;
+    cursor: pointer;
   }
 
   .ts-dropdown {

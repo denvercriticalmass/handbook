@@ -14,6 +14,7 @@ export default class extends Controller {
       create: true,
       createOnBlur: true,
       clearAfterSelect: true,
+      selectOnTab: true,
       plugins: ["remove_button"],
       options: this.optionsValue.map((tag) => ({ value: tag, text: tag })),
       onFocus: () => this.element.setAttribute("aria-expanded", "true"),
