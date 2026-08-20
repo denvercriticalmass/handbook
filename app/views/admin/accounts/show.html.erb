@@ -47,7 +47,11 @@
 <% end %>
 
 <%= form_with url: admin_passkeys_path,
-      data: { controller: "passkey", action: "submit->passkey#enroll" } do |form| %>
+      data: {
+        controller: "passkey",
+        action: "submit->passkey#enroll",
+        passkey_challenge_url_value: admin_passkey_challenge_path
+      } do |form| %>
   <%= form.label :nickname, "Passkey name" %>
   <%= form.text_field :nickname, required: true, autocomplete: "off" %>
   <%= form.hidden_field :credential, data: { passkey_target: "credential" } %>

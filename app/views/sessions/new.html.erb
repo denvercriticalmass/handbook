@@ -9,6 +9,17 @@
   <%= button_to "Continue with Google", google_sign_in_path, data: { turbo: false } %>
 <% end %>
 
+<%= form_with url: passkey_session_path,
+      data: {
+        controller: "passkey",
+        action: "submit->passkey#signin",
+        passkey_challenge_url_value: passkey_challenge_path
+      } do |form| %>
+  <%= form.hidden_field :credential, data: { passkey_target: "credential" } %>
+
+  <%= form.submit "Sign in with a passkey" %>
+<% end %>
+
 <%= form_with url: session_url do |form| %>
   <%= form.label :email_address, "Email address" %>
 

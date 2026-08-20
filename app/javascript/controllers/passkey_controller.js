@@ -1,19 +1,28 @@
 import { Controller } from "@hotwired/stimulus"
-import { create, supported } from "@github/webauthn-json"
+import { create, get, supported } from "@github/webauthn-json"
 
 export default class extends Controller {
   static targets = ["credential"]
+  static values = { challengeUrl: String }
 
   connect() {
     if (!supported()) this.element.hidden = true
   }
 
-  async enroll(event) {
+  enroll(event) {
+    this.#ceremony(event, create)
+  }
+
+  signin(event) {
+    this.#ceremony(event, get)
+  }
+
+  async #ceremony(event, ask) {
     event.preventDefault()
 
     try {
-      const options = await this.#challenge()
-      this.credentialTarget.value = JSON.stringify(await create({ publicKey: options }))
+      const publicKey = await this.#challenge()
+      this.credentialTarget.value = JSON.stringify(await ask({ publicKey }))
     } catch {
       // A cancelled prompt or an authenticator that declines is not an error worth showing.
       return
@@ -24,7 +33,7 @@ export default class extends Controller {
   }
 
   async #challenge() {
-    const response = await fetch("/admin/passkey_challenge", {
+    const response = await fetch(this.challengeUrlValue, {
       method: "POST",
       headers: {
         "Accept": "application/json",
