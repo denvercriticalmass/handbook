@@ -25,7 +25,7 @@ class Admin::PasskeysController < Admin::BaseController
 
     def enrolled_credential
       credential = WebAuthn::Credential.from_create(JSON.parse(params[:credential].to_s))
-      credential.verify(session.delete(:passkey_challenge))
+      credential.verify(session.delete(:passkey_challenge), user_verification: true)
 
       { external_id: credential.id, public_key: credential.public_key, sign_count: credential.sign_count }
     end

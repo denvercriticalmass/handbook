@@ -9,7 +9,7 @@ class Admin::PasskeyChallengesController < Admin::BaseController
         name: Current.user.email_address,
         display_name: Current.user.name
       },
-      authenticator_selection: { resident_key: "required", user_verification: "preferred" },
+      authenticator_selection: { resident_key: "required", user_verification: "required" },
       exclude: Current.user.passkeys.pluck(:external_id)
     )
 

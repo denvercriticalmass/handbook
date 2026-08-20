@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get "signin", to: "sessions#new", as: :signin
   get "signout", to: "sessions#signout", as: :signout
   get "signup", to: "registrations#new", as: :signup
+  post "passkey_challenge", to: "passkey_sessions#challenge"
+  resource :passkey_session, only: :create
   get "auth/failure", to: "omniauth_sessions#failure"
   get "auth/:provider/callback", to: "omniauth_sessions#create"
 
