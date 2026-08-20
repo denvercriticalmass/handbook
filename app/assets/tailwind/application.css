@@ -28,10 +28,9 @@
     line-height: 1.6;
   }
 
-  nav {
+  body > nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 1rem;
     max-width: 65ch;
     margin-inline: auto;
@@ -41,131 +40,73 @@
 
   /* One row that scrolls, never a second row with one orphan on it. The
      links need 470px at a 414px viewport and no phone is wider than they are. */
-  nav > ul {
+  body > nav > ul {
     display: flex;
     align-items: center;
     gap: 1rem;
     overflow-x: auto;
-    margin: 0;
+    margin: 0 auto 0 0;
     padding: 0;
     list-style: none;
     scrollbar-width: none;
   }
 
-  nav > ul::-webkit-scrollbar {
+  body > nav > ul::-webkit-scrollbar {
     display: none;
   }
 
-  nav > ul > li {
+  body > nav > ul > li {
     flex: none;
     white-space: nowrap;
   }
 
-  /* A phone gets a bottom bar: primary navigation in thumb reach rather than
-     the far corner. Apple caps a tab bar at five items on iPhone and asks for
-     44pt targets; Material asks for three to five destinations. We have five. */
-  nav svg {
+  body > nav svg {
     display: none;
     width: 1.5rem;
     height: 1.5rem;
   }
 
-  @media (width < 40rem) {
-    nav {
-      position: fixed;
-      inset: auto 0 0;
-      z-index: 20;
-      gap: 0;
-      max-width: none;
-      padding: 0 0 env(safe-area-inset-bottom);
-      border-block-start: 1px solid var(--line);
-      border-block-end: 0;
-      background-color: var(--bg);
-    }
-
-    nav > ul {
-      flex: 1;
-      overflow: visible;
-      gap: 0;
-    }
-
-    nav > ul > li,
-    nav > details {
-      flex: 1;
-    }
-
-    nav svg {
-      display: block;
-    }
-
-    nav > ul > li > a,
-    nav > details > summary {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.15rem;
-      min-height: 3.5rem;
-      padding-inline: 0.25rem;
-      font-size: 0.75rem;
-      text-align: center;
-      text-decoration: none;
-    }
-
-    nav > details > summary::after {
-      content: none;
-    }
-
-    nav > details > summary {
-      border: 0;
-      border-radius: 0;
-    }
-
-    nav details ul {
-      inset-block-end: 100%;
-      inset-inline-end: 0.5rem;
-      margin-block: 0 0.35rem;
-    }
-
-    main {
-      padding-block-end: calc(5rem + env(safe-area-inset-bottom));
-    }
-  }
-
-  nav > details {
+  body > nav > details {
     flex: none;
   }
 
-  nav form {
+  body > nav form {
     margin: 0;
   }
 
-  nav details {
+  body > nav details {
     position: relative;
   }
 
-  nav summary {
+  body > nav summary {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
     min-height: 2.25rem;
-    padding: 0.25rem 0.75rem;
-    border: 1px solid currentColor;
-    border-radius: 0.375rem;
     cursor: pointer;
     /* Both are needed to drop the default disclosure triangle. */
     list-style: none;
   }
 
-  nav summary::-webkit-details-marker {
+  body > nav > ul > li > a {
+    text-decoration: none;
+  }
+
+  body > nav > ul > li > a:hover,
+  body > nav summary:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  body > nav summary::-webkit-details-marker {
     display: none;
   }
 
-  nav summary::after {
+  body > nav summary::after {
     content: "\25be";
   }
 
-  nav details ul {
+  body > nav details ul {
     position: absolute;
     z-index: 10;
     inset-inline-end: 0;
@@ -178,14 +119,14 @@
     list-style: none;
   }
 
-  nav details li + li {
+  body > nav details li + li {
     margin-block-start: 0.35rem;
   }
 
   /* Both menu rows read the same, so the sign out button drops the border it
      gets as a nav button and the link drops its underline. */
-  nav details a,
-  nav details button {
+  body > nav details a,
+  body > nav details button {
     display: block;
     width: 100%;
     min-height: 2.25rem;
@@ -197,8 +138,8 @@
     white-space: nowrap;
   }
 
-  nav input[type="submit"],
-  nav button {
+  body > nav input[type="submit"],
+  body > nav button {
     min-height: 2.25rem;
     padding: 0.25rem 0.75rem;
     white-space: nowrap;
@@ -386,6 +327,66 @@
 
   [role="status"] {
     border-inline-start-color: var(--ok);
+  }
+
+  /* A phone gets a bottom bar, putting primary navigation in thumb reach. */
+  @media (width < 40rem) {
+    body > nav {
+      position: fixed;
+      inset: auto 0 0;
+      z-index: 20;
+      gap: 0;
+      max-width: none;
+      padding: 0 0 env(safe-area-inset-bottom);
+      border-block-start: 1px solid var(--line);
+      border-block-end: 0;
+      background-color: var(--bg);
+    }
+
+    /* Three of the five items live in the list, so it claims three shares. */
+    body > nav > ul {
+      flex: 3;
+      gap: 0;
+      margin: 0;
+      overflow: visible;
+    }
+
+    body > nav > ul > li,
+    body > nav > details {
+      flex: 1;
+    }
+
+    body > nav svg {
+      display: block;
+    }
+
+    body > nav > ul > li > a,
+    body > nav > details > summary {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.15rem;
+      min-height: 3.5rem;
+      padding-inline: 0.25rem;
+      font-size: 0.75rem;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    body > nav > details > summary::after {
+      content: none;
+    }
+
+    body > nav details ul {
+      inset-block-end: 100%;
+      inset-inline-end: 0.5rem;
+      margin-block: 0 0.35rem;
+    }
+
+    main {
+      padding-block-end: calc(5rem + env(safe-area-inset-bottom));
+    }
   }
 }
 
