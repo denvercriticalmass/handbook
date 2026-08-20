@@ -87,6 +87,12 @@ RSpec.describe "Registration" do
       expect(invitation.reload).to be_accepted
     end
 
+    it "refuses an address that already has an account" do
+      create(:user, email_address: invitation.email_address)
+
+      expect { accept }.not_to change(User, :count)
+    end
+
     it "refuses a second use of the same token" do
       accept
 
@@ -106,6 +112,20 @@ RSpec.describe "Registration" do
 
     it "refuses a made-up token" do
       expect { accept(token: "not-a-real-token") }.not_to change(User, :count)
+    end
+  end
+
+  describe "the signup page" do
+    it "greets an invited admin as invited" do
+      get "/signup", params: { token: create(:invitation).token }
+
+      expect(response.body).to include("Accept your invitation")
+    end
+
+    it "greets the founder as the first account" do
+      get "/signup"
+
+      expect(response.body).to include("Create the first account")
     end
   end
 end

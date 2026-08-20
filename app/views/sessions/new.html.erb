@@ -6,7 +6,7 @@
 
 <% if google_sign_in? %>
   <%# Turbo cannot follow the cross-origin redirect to Google. %>
-  <%= button_to "Continue with Google", "/auth/google_oauth2", data: { turbo: false } %>
+  <%= button_to "Continue with Google", google_sign_in_path, data: { turbo: false } %>
 <% end %>
 
 <%= form_with url: session_url do |form| %>
