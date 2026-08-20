@@ -15,7 +15,7 @@ RSpec.describe "Enrolling a passkey" do
   end
 
   def enroll(nickname: "Work phone", challenge: issued_challenge)
-    post "/admin/passkeys", params: { nickname:, credential: client.create(challenge:).to_json }
+    post "/admin/passkeys", params: { nickname:, credential: client.create(challenge:, user_verified: true).to_json }
   end
 
   it "stores the passkey" do
