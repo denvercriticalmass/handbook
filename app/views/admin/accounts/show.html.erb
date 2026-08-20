@@ -15,3 +15,42 @@
 
   <%= form.submit "Save" %>
 <% end %>
+
+<h2>Passkeys</h2>
+
+<% if @passkeys.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Added</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @passkeys.each do |passkey| %>
+        <tr>
+          <td><%= passkey.nickname %></td>
+          <td><%= passkey.created_at.to_date.to_fs(:long) %></td>
+
+          <td>
+            <%= button_to "Remove",
+                  admin_passkey_path(passkey),
+                  method: :delete,
+                  data: { turbo_confirm: "Remove \"#{passkey.nickname}\"? You won't be able to sign in with it." } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<%= form_with url: admin_passkeys_path,
+      data: { controller: "passkey", action: "submit->passkey#enroll" } do |form| %>
+  <%= form.label :nickname, "Passkey name" %>
+  <%= form.text_field :nickname, required: true, autocomplete: "off" %>
+  <%= form.hidden_field :credential, data: { passkey_target: "credential" } %>
+
+  <%= form.submit "Add a passkey" %>
+<% end %>
