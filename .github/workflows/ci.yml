@@ -95,6 +95,9 @@ jobs:
       - name: Check ERB formatting
         run: npx herb-format --check app
 
+      - name: Lint JavaScript
+        run: npx biome ci --error-on-warnings app/javascript
+
       - name: Prepare RuboCop cache
         uses: actions/cache@v6
         env:

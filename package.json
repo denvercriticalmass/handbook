@@ -3,6 +3,7 @@
   "private": true,
   "//": "Node is dev-time only. @herb-tools/formatter formats ERB; tailwindcss is here ONLY because the tailwind-class-sorter rewriter refuses to start without an npm copy to read the config from (marcoroth/herb#858). The CSS itself is built by the tailwindcss-ruby gem binary, not this package. Keep the version in step with the gem.",
   "devDependencies": {
+    "@biomejs/biome": "2.5.9",
     "@herb-tools/formatter": "^0.10.3",
     "@herb-tools/tailwind-class-sorter": "^0.10.3",
     "tailwindcss": "^4.3.3"
