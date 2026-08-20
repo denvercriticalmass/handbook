@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def google_sign_in?
+    ENV["GOOGLE_CLIENT_ID"].present?
+  end
+
   # Changes when the css is rebuilt, so a deploy reinstalls the worker.
   def service_worker_release
     Rails.application.assets.load_path.find("tailwind.css")&.digest || Rails.env
