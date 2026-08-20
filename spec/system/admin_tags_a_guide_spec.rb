@@ -28,6 +28,17 @@ RSpec.describe "Tagging a guide" do
     find("trix-editor").click.send_keys("Body text.")
   end
 
+  # acts_as_taggable_on joins tag_list.to_s with ", " (a space after the
+  # comma), which the widget's plain "," delimiter can't parse -- the second
+  # tag silently vanished from the field until the seed value used to_a.join.
+  it "shows every existing tag when a guide already has more than one" do
+    guide = create(:guide, tag_list: %w[test b])
+
+    visit "/admin/guides/#{guide.slug}/edit"
+
+    expect(page).to have_css(".ts-control .item", count: 2)
+  end
+
   it "reuses an existing tag rather than creating a duplicate" do
     open_tags
     find(".ts-dropdown .option", text: "etiquette").click
@@ -46,6 +57,38 @@ RSpec.describe "Tagging a guide" do
     sleep 0.3
 
     expect(tag_field.value).to eq("brand new tag")
+  end
+
+  it "commits a typed tag on Tab and keeps focus in the field" do
+    open_tags
+    input = find(".ts-control input")
+    input.click
+    input.send_keys("brand new tag")
+    sleep 0.3
+    input.send_keys(:tab)
+    sleep 0.3
+
+    expect(tag_field.value).to eq("brand new tag")
+    expect(page).to have_css(".ts-control input:focus")
+  end
+
+  it "tabs to the next field normally once the tag box is empty" do
+    open_tags
+    find(".ts-control input").send_keys(:tab)
+    sleep 0.3
+
+    expect(page).to have_no_css(".ts-control input:focus")
+  end
+
+  it "shows a pointer cursor on a chip's remove button" do
+    open_tags
+    find(".ts-dropdown .option", text: "etiquette").click
+
+    cursor = page.evaluate_script(
+      "getComputedStyle(document.querySelector('.ts-control .item .remove')).cursor"
+    )
+
+    expect(cursor).to eq("pointer")
   end
 
   it "removes a tag from the field" do
