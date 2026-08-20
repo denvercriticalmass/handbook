@@ -360,7 +360,10 @@ export default class extends Controller {
       if (!state) return
 
       event.preventDefault()
-      const next = limit(state.startOffsetX + event.clientX - state.startX, state.startOffsetY + event.clientY - state.startY)
+      const next = limit(
+        state.startOffsetX + event.clientX - state.startX,
+        state.startOffsetY + event.clientY - state.startY
+      )
       state.targetX = next.x
       state.targetY = next.y
       this.#tick(states, step)
@@ -391,7 +394,10 @@ export default class extends Controller {
       this.#tick(states, step)
     }
 
-    this.bubbles.forEach((bubble) => bubble.addEventListener("pointerdown", grab, { signal: this.#signal }))
+    for (const bubble of this.bubbles) {
+      bubble.addEventListener("pointerdown", grab, { signal: this.#signal })
+    }
+
     window.addEventListener("pointermove", drag, { signal: this.#signal })
     window.addEventListener("pointerup", drop, { signal: this.#signal })
     window.addEventListener("pointercancel", drop, { signal: this.#signal })

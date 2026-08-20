@@ -7,6 +7,6 @@ export default class extends Controller {
   }
 
   get paths() {
-    return [ ...this.element.querySelectorAll("a[href]") ].map((link) => link.pathname)
+    return [...this.element.querySelectorAll("a[href]")].map((link) => link.pathname)
   }
 }
