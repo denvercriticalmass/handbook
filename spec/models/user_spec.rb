@@ -37,6 +37,13 @@ RSpec.describe User do
     expect(build(:user, email_address: "")).not_to be_valid
   end
 
+  # Without this Registration raises RecordNotUnique instead of refusing.
+  it "needs an unclaimed email address" do
+    taken = create(:user).email_address
+
+    expect(build(:user, email_address: taken)).not_to be_valid
+  end
+
   it "refuses a destroy while it has authored content" do
     user = create(:user)
     create(:guide, created_by: user)

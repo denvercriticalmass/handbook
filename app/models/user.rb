@@ -29,7 +29,7 @@ class User < ApplicationRecord
   scope :active, -> { where(active: true) }
 
   validates :name, presence: true
-  validates :email_address, presence: true
+  validates :email_address, presence: true, uniqueness: true
 
   # Without this, a suspended user stays signed in until their cookie expires.
   after_update_commit :end_sessions, if: -> { saved_change_to_active? && !active? }
