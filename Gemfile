@@ -30,6 +30,9 @@ gem "bcrypt", "~> 3.1.7"
 # Per-resource authorization policies [https://github.com/varvet/pundit]
 gem "pundit"
 
+# Ships the nightly database dump to Backblaze B2, which speaks S3
+gem "aws-sdk-s3", require: false
+
 # Passkeys alongside Google sign-in [https://github.com/cedarcode/webauthn-ruby]
 gem "webauthn"
 
