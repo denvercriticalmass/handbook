@@ -15,6 +15,11 @@ local linters = new Mapping<String, Step> {
         check = "npx herb-format --check {{ files }}"
         fix = "npx herb-format {{ files }}"
     }
+    ["biome"] {
+        glob = "app/javascript/**/*.js"
+        check = "npx biome check --error-on-warnings {{ files }}"
+        fix = "npx biome check --write {{ files }}"
+    }
 }
 
 hooks {
