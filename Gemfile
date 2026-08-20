@@ -30,6 +30,9 @@ gem "bcrypt", "~> 3.1.7"
 # Per-resource authorization policies [https://github.com/varvet/pundit]
 gem "pundit"
 
+# Passkeys alongside Google sign-in [https://github.com/cedarcode/webauthn-ruby]
+gem "webauthn"
+
 # Google sign-in for admins [https://github.com/zquestz/omniauth-google-oauth2]
 gem "omniauth"
 gem "omniauth-google-oauth2"

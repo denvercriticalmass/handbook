@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
+  has_many :passkeys, dependent: :destroy
   # created_by_id is not nullable, so nullify would raise. An account that
   # wrote something gets suspended, never deleted.
   has_many :written_guides,
@@ -36,6 +37,13 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: -> { it.strip.downcase }
   normalizes :name, with: -> { it.strip }
+
+  # WebAuthn wants a stable opaque id for the account, never the email address.
+  def passkey_handle
+    update!(webauthn_id: WebAuthn.generate_user_id) if webauthn_id.blank?
+
+    webauthn_id
+  end
 
   private
 

@@ -57,4 +57,20 @@ RSpec.describe User do
 
     expect { user.update!(email_address: "moved@example.com") }.not_to change { user.sessions.count }
   end
+
+  describe "the passkey handle" do
+    it "is generated on demand" do
+      expect(create(:user).passkey_handle).to be_present
+    end
+
+    it "never changes once generated" do
+      user = create(:user)
+
+      expect(user.passkey_handle).to eq(user.reload.passkey_handle)
+    end
+
+    it "differs between accounts" do
+      expect(create(:user).passkey_handle).not_to eq(create(:user).passkey_handle)
+    end
+  end
 end

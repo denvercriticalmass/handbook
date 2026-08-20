@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_19_175103) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_20_093234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -85,6 +85,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_175103) do
     t.index ["token"], name: "index_invitations_on_token", unique: true
   end
 
+  create_table "passkeys", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "external_id", null: false
+    t.datetime "last_used_at"
+    t.string "nickname", null: false
+    t.string "public_key", null: false
+    t.bigint "sign_count", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["external_id"], name: "index_passkeys_on_external_id", unique: true
+    t.index ["user_id"], name: "index_passkeys_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -133,7 +146,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_175103) do
     t.string "password_digest", null: false
     t.integer "role", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.string "webauthn_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["webauthn_id"], name: "index_users_on_webauthn_id", unique: true
   end
 
   create_table "versions", force: :cascade do |t|
@@ -166,6 +181,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_175103) do
   add_foreign_key "cheat_sheets", "users", column: "created_by_id"
   add_foreign_key "guides", "users", column: "created_by_id"
   add_foreign_key "invitations", "users", column: "invited_by_id"
+  add_foreign_key "passkeys", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "taggings", "tags"
   add_foreign_key "waypoints", "users", column: "created_by_id"

@@ -31,6 +31,8 @@ Rails.application.routes.draw do
       get :history, on: :member
     end
     resource :account, only: %i[ show update ]
+    resources :passkeys, only: %i[ create destroy ]
+    resource :passkey_challenge, only: :create
 
     root "accounts#show"
   end

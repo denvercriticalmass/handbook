@@ -25,6 +25,7 @@ env:
   clear:
     SOLID_QUEUE_IN_PUMA: true
     APP_HOST: denvercriticalmass.org
+    WEBAUTHN_ORIGIN: https://denvercriticalmass.org
     SUPERADMIN_EMAIL: joe@joesak.com
     POSTGRES_HOST: handbook-db
 
