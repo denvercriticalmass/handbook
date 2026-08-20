@@ -3,6 +3,13 @@ module ApplicationHelper
     Rails.application.credentials.dig(:google, :client_id).present?
   end
 
+  # OmniAuth hands the query back at the callback, so the token survives Google.
+  def google_sign_in_path(token: nil)
+    return "/auth/google_oauth2" if token.blank?
+
+    "/auth/google_oauth2?#{ { token: }.to_query }"
+  end
+
   # Changes when the css is rebuilt, so a deploy reinstalls the worker.
   def service_worker_release
     Rails.application.assets.load_path.find("tailwind.css")&.digest || Rails.env

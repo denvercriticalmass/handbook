@@ -113,4 +113,86 @@ RSpec.describe "Signing in with Google" do
 
     expect(response.body).not_to include("Continue with Google")
   end
+
+  it "carries the invitation token on the signup button" do
+    configured_client_id("handbook.apps.googleusercontent.com")
+    invitation = create(:invitation)
+
+    get "/signup", params: { token: invitation.token }
+
+    expect(response.body).to include("/auth/google_oauth2?token=#{invitation.token}")
+  end
+
+  describe "accepting an invitation" do
+    # let!/before so both exist before any expectation block measures a count.
+    let!(:invitation) { create(:invitation, email_address: email) }
+
+    before { create(:user, email_address: "founder@example.com") }
+
+    def accept_with_google(token: invitation.token, address: email)
+      google_returns(address)
+      post "/auth/google_oauth2?#{ { token: }.to_query }"
+      follow_redirect! while response.redirect? && response.location.include?("/auth/")
+    end
+
+    it "creates the invited admin" do
+      expect { accept_with_google }.to change(User, :count).by(1)
+    end
+
+    it "signs them straight in" do
+      accept_with_google
+
+      expect(Session.count).to eq(1)
+    end
+
+    it "spends the invitation" do
+      accept_with_google
+
+      expect(invitation.reload).to be_accepted
+    end
+
+    it "grants admin, never superadmin" do
+      accept_with_google
+
+      expect(User.find_by(email_address: email)).to be_admin
+    end
+
+    it "refuses a token issued to another address" do
+      expect { accept_with_google(address: "someone.else@example.com") }
+        .not_to change(User, :count)
+    end
+
+    it "refuses a Google account carrying no token" do
+      expect { accept_with_google(token: nil) }.not_to change(User, :count)
+    end
+
+    it "refuses an expired invitation" do
+      invitation.update!(expires_at: 1.day.ago)
+
+      expect { accept_with_google }.not_to change(User, :count)
+    end
+  end
+
+  describe "founding the first account" do
+    around do |example|
+      ClimateControl.modify(SUPERADMIN_EMAIL: email) { example.run }
+    end
+
+    def sign_in_as_founder(address: email)
+      google_returns(address)
+      post "/auth/google_oauth2"
+      follow_redirect! while response.redirect? && response.location.include?("/auth/")
+    end
+
+    it "makes the founder a superadmin" do
+      sign_in_as_founder
+
+      expect(User.find_by(email_address: email)).to be_superadmin
+    end
+
+    it "turns away any other address" do
+      expect { sign_in_as_founder(address: "stranger@example.com") }
+        .not_to change(User, :count)
+    end
+  end
 end
