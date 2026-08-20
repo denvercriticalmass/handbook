@@ -30,6 +30,12 @@ gem "bcrypt", "~> 3.1.7"
 # Per-resource authorization policies [https://github.com/varvet/pundit]
 gem "pundit"
 
+# Google sign-in for admins [https://github.com/zquestz/omniauth-google-oauth2]
+gem "omniauth"
+gem "omniauth-google-oauth2"
+# OmniAuth's request phase is a GET without this, which CVE-2015-9284 is about
+gem "omniauth-rails_csrf_protection"
+
 # Postgres full-text search [https://github.com/Casecommons/pg_search]
 gem "pg_search"
 

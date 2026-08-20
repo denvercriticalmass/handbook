@@ -32,6 +32,11 @@ RSpec.describe User do
     expect(build(:user, name: "")).not_to be_valid
   end
 
+  # A blank one would match the address an unverified Google account returns.
+  it "needs an email address" do
+    expect(build(:user, email_address: "")).not_to be_valid
+  end
+
   it "refuses a destroy while it has authored content" do
     user = create(:user)
     create(:guide, created_by: user)
