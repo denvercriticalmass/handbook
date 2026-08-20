@@ -16,12 +16,4 @@ class SessionsController < ApplicationController
     terminate_session
     redirect_to new_session_path, status: :see_other, flash: { signed_out: true }
   end
-
-  private
-
-    # Signing in only exists for admins, so land them where they can work. The
-    # public side deliberately carries no route into here.
-    def after_authentication_url
-      session.delete(:return_to_after_authenticating) || admin_root_url
-    end
 end

@@ -34,8 +34,10 @@ module Authentication
       redirect_to new_session_path
     end
 
+    # Signing in only exists for admins, so land them where they can work. The
+    # public side deliberately carries no route into here.
     def after_authentication_url
-      session.delete(:return_to_after_authenticating) || root_url
+      session.delete(:return_to_after_authenticating) || admin_root_url
     end
 
     def start_new_session_for(user)
