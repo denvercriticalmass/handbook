@@ -6,7 +6,10 @@
   <%= form.rich_textarea :body %>
 
   <%= form.label :tag_list, "Tags" %>
-  <%= form.text_field :tag_list, value: cheat_sheet.tag_list.to_s %>
+
+  <%= form.text_field :tag_list,
+        value: cheat_sheet.tag_list.to_a.join(","),
+        data: { controller: "tags", tags_options_value: existing_tags.to_json } %>
 
   <%= form.submit "Save" %>
 <% end %>
