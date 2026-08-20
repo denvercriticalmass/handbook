@@ -53,6 +53,12 @@ RSpec.describe DatabaseBackup do
     expect(Dir.glob(File.join(Dir.tmpdir, "#{described_class::PREFIX}*"))).to be_empty
   end
 
+  it "says what it needs when nothing is configured" do
+    allow(Rails.application.credentials).to receive(:backups).and_return(nil)
+
+    expect { described_class.bucket }.to raise_error(/access_key_id/)
+  end
+
   describe "pruning" do
     def stub_backups(*ages)
       client.stub_responses(

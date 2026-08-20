@@ -31,8 +31,8 @@ class DatabaseBackup
   class << self
     def client
       Aws::S3::Client.new(
-        access_key_id: settings.fetch(:key_id),
-        secret_access_key: settings.fetch(:application_key),
+        access_key_id: settings.fetch(:access_key_id),
+        secret_access_key: settings.fetch(:secret_access_key),
         endpoint: settings.fetch(:endpoint),
         region: settings.fetch(:region)
       )
@@ -44,9 +44,11 @@ class DatabaseBackup
 
     private
 
+      # Named for the job rather than the vendor, which has already changed once.
       def settings
-        Rails.application.credentials.b2 ||
-          raise("Backups need a b2 section in credentials: key_id, application_key, endpoint, region, bucket")
+        Rails.application.credentials.backups ||
+          raise("Backups need a backups section in credentials: " \
+                "access_key_id, secret_access_key, endpoint, region, bucket")
       end
   end
 
